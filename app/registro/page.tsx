@@ -7,12 +7,18 @@ export const metadata: Metadata = {
   title: "Crear cuenta | Hispaniarum",
 };
 
-export default function RegistroPage() {
+export default async function RegistroPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
+  const { callbackUrl } = await searchParams;
+
   return (
     <>
       <Header />
       <main className="mx-auto flex max-w-md flex-col px-6 py-20">
-        <AuthForm mode="registro" />
+        <AuthForm mode="registro" callbackUrl={callbackUrl} />
       </main>
       <Footer />
     </>

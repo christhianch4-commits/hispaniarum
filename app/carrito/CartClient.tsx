@@ -1,19 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { courses } from "@/app/data/courses";
 import { CertBadge } from "@/app/components/ui";
+import { checkoutAction } from "@/app/actions/enrollment";
 
 const seedSlugs = [courses[0].slug, courses[2].slug];
 
 export default function CartClient() {
+  const { status } = useSession();
+  const router = useRouter();
   const [items, setItems] = useState(
     courses.filter((c) => seedSlugs.includes(c.slug))
   );
   const [checkedOut, setCheckedOut] = useState(false);
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const total = items.reduce((acc, c) => acc + c.price, 0);
+
+  function handleCheckout() {
+    if (status !== "authenticated") {
+      router.push("/login?callbackUrl=/carrito");
+      return;
+    }
+    setError(null);
+    startTransition(async () => {
+      const result = await checkoutAction(items.map((c) => c.slug));
+      if (!result.ok) {
+        router.push(result.redirectTo ?? "/login");
+        return;
+      }
+      setCheckedOut(true);
+    });
+  }
 
   if (checkedOut) {
     return (
@@ -23,8 +46,7 @@ export default function CartClient() {
           ¡Inscripción completada!
         </h2>
         <p className="mt-2 text-black/60">
-          Esta es una demo visual del flujo de compra. Ya puedes ver tus
-          cursos en tu panel.
+          Ya quedaste inscrito. Revisa tu progreso en tu panel.
         </p>
         <Link
           href="/dashboard"
@@ -102,14 +124,25 @@ export default function CartClient() {
           <span>Total</span>
           <span>${total}</span>
         </div>
+        {error && (
+          <p className="mt-3 text-center text-xs font-medium text-[#FF4A60]">
+            {error}
+          </p>
+        )}
         <button
-          onClick={() => setCheckedOut(true)}
-          className="paper-btn mt-6 w-full bg-black px-6 py-3 text-sm text-white"
+          onClick={handleCheckout}
+          disabled={pending}
+          className="paper-btn mt-6 w-full bg-black px-6 py-3 text-sm text-white disabled:opacity-60"
         >
-          Finalizar inscripción
+          {pending
+            ? "Procesando..."
+            : status === "authenticated"
+              ? "Finalizar inscripción"
+              : "Ingresar y finalizar inscripción"}
         </button>
         <p className="mt-3 text-center text-xs text-black/40">
-          Demo visual: no se procesa ningún pago real.
+          No se procesa ningún pago real todavía — solo te inscribe en el
+          curso en tu cuenta.
         </p>
       </div>
     </div>

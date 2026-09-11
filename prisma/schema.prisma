@@ -1,0 +1,53 @@
+// Esquema de datos de Hispaniarum.
+// Dev: SQLite local (cero configuración). Producción: cambia el provider
+// a "postgresql" y DATABASE_URL a tu cadena de Postgres (Supabase, Neon,
+// Vercel Postgres...) — los modelos no cambian.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  COMPANY_ADMIN
+  ADMIN
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+
+  enrollments  Enrollment[]
+  certificates CertificateIssuance[]
+}
+
+model Enrollment {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseSlug  String
+  progress    Int       @default(0)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([userId, courseSlug])
+}
+
+model CertificateIssuance {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseSlug String
+  certType   String
+  issuedAt   DateTime @default(now())
+}

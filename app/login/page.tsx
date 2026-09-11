@@ -7,12 +7,18 @@ export const metadata: Metadata = {
   title: "Ingresar | Hispaniarum",
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
+  const { callbackUrl } = await searchParams;
+
   return (
     <>
       <Header />
       <main className="mx-auto flex max-w-md flex-col px-6 py-20">
-        <AuthForm mode="login" />
+        <AuthForm mode="login" callbackUrl={callbackUrl} />
       </main>
       <Footer />
     </>

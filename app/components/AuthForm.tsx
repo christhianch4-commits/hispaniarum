@@ -1,40 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import Link from "next/link";
+import { loginAction, registerAction } from "@/app/actions/auth";
 
-export default function AuthForm({ mode }: { mode: "login" | "registro" }) {
-  const [submitted, setSubmitted] = useState(false);
+export default function AuthForm({
+  mode,
+  callbackUrl = "/dashboard",
+}: {
+  mode: "login" | "registro";
+  callbackUrl?: string;
+}) {
   const isLogin = mode === "login";
-
-  if (submitted) {
-    return (
-      <div className="paper-card p-8 text-center">
-        <p className="text-2xl">👋</p>
-        <p className="mt-2 font-bold">
-          {isLogin ? "¡Bienvenido de vuelta!" : "¡Cuenta creada!"}
-        </p>
-        <p className="mt-1 text-sm text-black/60">
-          Esta es una demo visual: en producción aquí se validaría tu acceso.
-        </p>
-        <Link
-          href="/dashboard"
-          className="paper-btn mt-5 inline-block bg-black px-6 py-3 text-sm text-white"
-        >
-          Ir a mi panel
-        </Link>
-      </div>
-    );
-  }
+  const [state, formAction, pending] = useActionState(
+    isLogin ? loginAction : registerAction,
+    undefined
+  );
 
   return (
-    <form
-      className="paper-card p-8"
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-    >
+    <form action={formAction} className="paper-card p-8">
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <h1 className="text-2xl font-extrabold">
         {isLogin ? "Ingresa a tu cuenta" : "Crea tu cuenta gratis"}
       </h1>
@@ -44,10 +29,17 @@ export default function AuthForm({ mode }: { mode: "login" | "registro" }) {
           : "Empieza a capacitarte hoy mismo, sin tarjeta de crédito."}
       </p>
 
+      {state?.error && (
+        <p className="mt-4 rounded-xl bg-[#FF4A60]/10 px-4 py-2 text-sm font-medium text-[#FF4A60]">
+          {state.error}
+        </p>
+      )}
+
       <div className="mt-6 grid gap-3">
         {!isLogin && (
           <input
             required
+            name="name"
             type="text"
             placeholder="Nombre completo"
             className="rounded-2xl border-2 border-black/10 px-4 py-3 text-sm focus:border-black focus:outline-none"
@@ -55,21 +47,25 @@ export default function AuthForm({ mode }: { mode: "login" | "registro" }) {
         )}
         <input
           required
+          name="email"
           type="email"
           placeholder="Correo electrónico"
           className="rounded-2xl border-2 border-black/10 px-4 py-3 text-sm focus:border-black focus:outline-none"
         />
         <input
           required
+          name="password"
           type="password"
+          minLength={isLogin ? undefined : 6}
           placeholder="Contraseña"
           className="rounded-2xl border-2 border-black/10 px-4 py-3 text-sm focus:border-black focus:outline-none"
         />
         <button
           type="submit"
-          className="paper-btn mt-2 bg-black px-6 py-3 text-sm text-white"
+          disabled={pending}
+          className="paper-btn mt-2 bg-black px-6 py-3 text-sm text-white disabled:opacity-60"
         >
-          {isLogin ? "Ingresar" : "Crear cuenta"}
+          {pending ? "Un momento..." : isLogin ? "Ingresar" : "Crear cuenta"}
         </button>
       </div>
 

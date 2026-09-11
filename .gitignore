@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/app/generated/prisma
+
+# base de datos local (SQLite) — no se versiona
+/prisma/*.db
+/prisma/*.db-journal
+
+# docs de referencia auto-generadas por "prisma init" (no son código propio)
+/.agents/
+/.windsurf/
+/.claude/skills/
+skills-lock.json

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Onest } from "next/font/google";
+import Providers from "@/app/providers";
 import "./globals.css";
 
 const onest = Onest({
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${onest.variable} antialiased`}>
       <body className="min-h-screen bg-white text-[#0a0a0a] font-sans">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

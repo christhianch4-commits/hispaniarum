@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import { categories } from "@/app/data/categories";
 import { brand } from "@/app/data/site";
 
@@ -15,6 +17,20 @@ const navLinks = [
 export default function Header() {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: session, status, update } = useSession();
+  const firstName = session?.user?.name?.split(" ")[0];
+
+  // El login/registro ocurre en una Server Action: el SessionProvider del
+  // layout (que persiste entre navegaciones) no se entera solo. Al cambiar
+  // de ruta, forzamos un refetch puntual (una vez por navegación, no en loop).
+  const pathname = usePathname();
+  const updateRef = useRef(update);
+  useEffect(() => {
+    updateRef.current = update;
+  }, [update]);
+  useEffect(() => {
+    updateRef.current();
+  }, [pathname]);
 
   return (
     <header className="sticky top-4 z-50 mx-auto flex w-fit max-w-[95vw] items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-2 shadow-[0_2px_0_0_rgba(0,0,0,1)]">
@@ -92,18 +108,37 @@ export default function Header() {
             <circle cx="17" cy="20" r="1.4" fill="currentColor" />
           </svg>
         </Link>
-        <Link
-          href="/login"
-          className="rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"
-        >
-          Ingresar
-        </Link>
-        <Link
-          href="/registro"
-          className="paper-btn whitespace-nowrap bg-black px-4 py-2 text-sm text-white"
-        >
-          Regístrate
-        </Link>
+        {status === "authenticated" ? (
+          <>
+            <Link
+              href="/dashboard"
+              className="rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"
+            >
+              Hola, {firstName}
+            </Link>
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="paper-btn whitespace-nowrap bg-black px-4 py-2 text-sm text-white"
+            >
+              Salir
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              href="/login"
+              className="rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"
+            >
+              Ingresar
+            </Link>
+            <Link
+              href="/registro"
+              className="paper-btn whitespace-nowrap bg-black px-4 py-2 text-sm text-white"
+            >
+              Regístrate
+            </Link>
+          </>
+        )}
       </div>
 
       <button
@@ -156,18 +191,37 @@ export default function Header() {
             </Link>
           </div>
           <div className="flex gap-2 border-t border-black/10 pt-3">
-            <Link
-              href="/login"
-              className="flex-1 rounded-full border-2 border-black px-4 py-2 text-center font-medium"
-            >
-              Ingresar
-            </Link>
-            <Link
-              href="/registro"
-              className="flex-1 rounded-full bg-black px-4 py-2 text-center font-medium text-white"
-            >
-              Regístrate
-            </Link>
+            {status === "authenticated" ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex-1 rounded-full border-2 border-black px-4 py-2 text-center font-medium"
+                >
+                  Mi panel
+                </Link>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="flex-1 rounded-full bg-black px-4 py-2 text-center font-medium text-white"
+                >
+                  Salir
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="flex-1 rounded-full border-2 border-black px-4 py-2 text-center font-medium"
+                >
+                  Ingresar
+                </Link>
+                <Link
+                  href="/registro"
+                  className="flex-1 rounded-full bg-black px-4 py-2 text-center font-medium text-white"
+                >
+                  Regístrate
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
