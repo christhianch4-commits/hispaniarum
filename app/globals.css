@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --accent-pink: #ff6b7a;
+  --accent-red: #ff4a60;
+  --accent-blue: #2f81f7;
+  --accent-yellow: #ffc224;
+  --accent-indigo: #6366f1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-red: var(--accent-red);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-indigo: var(--accent-indigo);
+  --font-sans: var(--font-onest);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
