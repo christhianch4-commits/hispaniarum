@@ -1,270 +1,275 @@
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Avatar from "@/app/components/Avatar";
+import CourseCard from "@/app/components/CourseCard";
+import CategoryCard from "@/app/components/CategoryCard";
 import NewsletterForm from "@/app/components/NewsletterForm";
 import {
-  articles,
-  experience,
-  portfolio,
-  profile,
-  services,
-  stats,
-  testimonial,
-} from "@/app/data/site";
+  Highlight,
+  PrimaryButton,
+  SecondaryButton,
+  SectionHeading,
+  Tag,
+} from "@/app/components/ui";
+import { categories } from "@/app/data/categories";
+import { getFeaturedCourses } from "@/app/data/courses";
+import { brand, certifications, companyLogos, heroStats, testimonials } from "@/app/data/site";
 
-function Highlight({
-  color,
-  children,
-}: {
-  color: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <span
-      className="inline-block rounded-lg px-2 text-white"
-      style={{ backgroundColor: color }}
-    >
-      {children}
-    </span>
-  );
-}
-
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-block rounded-md bg-black px-2 py-0.5 text-xs font-semibold text-white">
-      {children}
-    </span>
-  );
-}
+const steps = [
+  {
+    title: "Elige tu curso",
+    description:
+      "Explora el catálogo por categoría, nivel o certificación y encuentra el curso ideal para ti o tu equipo.",
+  },
+  {
+    title: "Aprende a tu ritmo",
+    description:
+      "Video-clases cortas, materiales descargables y evaluaciones prácticas. Tu progreso se guarda automáticamente.",
+  },
+  {
+    title: "Obtén tu certificado",
+    description:
+      "Al completar el curso recibes tu certificado empresarial o el aval del Ministerio del Trabajo, listo para compartir.",
+  },
+];
 
 export default function Home() {
+  const featured = getFeaturedCourses();
+
   return (
     <>
       <Header />
 
       <main className="mx-auto max-w-6xl px-6">
         {/* Hero */}
-        <section id="home" className="grid gap-10 py-20 md:grid-cols-2 md:items-center">
+        <section className="grid gap-10 py-20 md:grid-cols-2 md:items-center">
           <div>
-            <h1 className="text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
-              I&apos;m <Highlight color="#FF6B7A">{profile.name}</Highlight>,
-              <br />a {profile.role} from{" "}
-              <Highlight color="#2F81F7">{profile.city}</Highlight>
+            <Tag>Plataforma de capacitación en Ecuador</Tag>
+            <h1 className="mt-4 text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
+              Capacítate y{" "}
+              <Highlight color="#FF6B7A">certifícate</Highlight> sin salir
+              de casa
             </h1>
-            <p className="mt-6 max-w-md text-black/60">{profile.tagline}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#contact"
-                className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
-              >
-                Get in touch
-              </a>
-              <a
-                href="#portfolio"
-                className="rounded-full border-2 border-black px-6 py-3 text-sm font-semibold"
-              >
-                View portfolio
-              </a>
-            </div>
-          </div>
-          <Avatar bg="#FFC224" shirt="#FF6B7A" className="mx-auto w-full max-w-sm" />
-        </section>
-
-        {/* Services */}
-        <section className="py-20">
-          <h2 className="max-w-lg text-3xl font-extrabold md:text-4xl">
-            <Highlight color="#FF4A60">My broad set of services</Highlight>
-          </h2>
-          <p className="mt-4 max-w-lg text-black/60">
-            Lacus, adipiscing lectus convallis purus aliquet cursus magnaol
-            montes augue donec cras turpis ultrices nulla sed doler.
-          </p>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s) => (
-              <div
-                key={s.title}
-                className="rounded-3xl border-2 border-black p-6 shadow-[0_3px_0_0_rgba(0,0,0,1)]"
-              >
-                <h3 className="text-lg font-bold">{s.title}</h3>
-                <p className="mt-2 text-sm text-black/60">{s.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex flex-col items-start gap-4 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h3 className="text-xl font-bold">Get in touch</h3>
-              <p className="mt-1 max-w-md text-white/60">
-                Looking for another service? Get in touch with me, there is a
-                high chance that I will be able to help!
-              </p>
-            </div>
-            <a
-              href="#contact"
-              className="whitespace-nowrap rounded-full bg-white px-6 py-3 text-sm font-semibold text-black"
-            >
-              Get in touch
-            </a>
-          </div>
-        </section>
-
-        {/* About */}
-        <section id="about" className="grid gap-10 py-20 md:grid-cols-2 md:items-center">
-          <Avatar bg="#6366F1" shirt="#FFC224" className="order-2 mx-auto w-full max-w-sm md:order-1" />
-          <div className="order-1 md:order-2">
-            <h2 className="text-3xl font-extrabold md:text-4xl">
-              Who&apos;s behind all this{" "}
-              <Highlight color="#2F81F7">great work?</Highlight>
-            </h2>
-            <p className="mt-4 max-w-md text-black/60">
-              Eu pellentesque arcu ornare velit faucibus egestas gravida sed
-              in purus enim molestie gravida imperdiet integer.
+            <p className="mt-6 max-w-md text-black/60">
+              {brand.description}
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <PrimaryButton href="/cursos">Explorar cursos</PrimaryButton>
+              <SecondaryButton href="/certificaciones">
+                Ver certificaciones
+              </SecondaryButton>
+            </div>
 
-            <div className="mt-8 space-y-6">
-              {stats.map((s) => (
-                <div key={s.title}>
-                  <h3 className="font-bold">{s.title}</h3>
-                  <p className="mt-1 text-sm text-black/60">{s.description}</p>
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {heroStats.map((s) => (
+                <div key={s.label}>
+                  <p className="text-xl font-extrabold">{s.value}</p>
+                  <p className="text-xs text-black/50">{s.label}</p>
                 </div>
               ))}
             </div>
-
-            <a
-              href="#about"
-              className="mt-8 inline-block rounded-full border-2 border-black px-6 py-3 text-sm font-semibold"
-            >
-              More about me
-            </a>
           </div>
+          <Avatar
+            bg="#FFC224"
+            shirt="#FF6B7A"
+            className="mx-auto w-full max-w-sm"
+          />
         </section>
 
-        {/* Portfolio */}
-        <section id="portfolio" className="py-20">
-          <h2 className="max-w-lg text-3xl font-extrabold md:text-4xl">
-            Take a look at my{" "}
-            <Highlight color="#FFC224">design portfolio</Highlight>
-          </h2>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {portfolio.map((p) => (
-              <div
-                key={p.title}
-                className="overflow-hidden rounded-3xl border-2 border-black shadow-[0_3px_0_0_rgba(0,0,0,1)]"
-              >
-                <div
-                  className="h-48"
-                  style={{ backgroundColor: p.color }}
-                  aria-hidden
-                />
-                <div className="p-6">
-                  <Tag>{p.tag}</Tag>
-                  <h3 className="mt-3 text-lg font-bold">{p.title}</h3>
-                  <p className="mt-2 text-sm text-black/60">{p.description}</p>
-                  <a href="#" className="mt-4 inline-block text-sm font-semibold underline">
-                    View case study
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <a
-            href="#portfolio"
-            className="mt-8 inline-block rounded-full border-2 border-black px-6 py-3 text-sm font-semibold"
-          >
-            Browse all portfolio
-          </a>
-        </section>
-
-        {/* Experience */}
-        <section className="py-20">
-          <h2 className="max-w-lg text-3xl font-extrabold md:text-4xl">
-            Take a look at my{" "}
-            <Highlight color="#6366F1">past experience</Highlight>
-          </h2>
-          <p className="mt-4 max-w-lg text-black/60">
-            Eu pellentesque arcu ornare velit faucibus egestas gravida sed in
-            purus enim molestie gravida imperdiet integer.
+        {/* Empresas que confían */}
+        <section className="border-y-2 border-black/5 py-10">
+          <p className="text-center text-xs font-semibold uppercase tracking-wide text-black/40">
+            Empresas que ya capacitan a sus equipos con {brand.name}
           </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {companyLogos.map((name) => (
+              <span key={name} className="text-lg font-bold text-black/25">
+                {name}
+              </span>
+            ))}
+          </div>
+        </section>
 
-          <div className="mt-10 divide-y-2 divide-black/10 border-y-2 border-black/10">
-            {experience.map((e) => (
-              <div
-                key={e.role}
-                className="grid gap-2 py-6 sm:grid-cols-[200px_1fr] sm:gap-8"
-              >
-                <span className="text-sm font-semibold text-black/50">
-                  {e.period}
+        {/* Categorías */}
+        <section className="py-20">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading
+              eyebrow="Catálogo"
+              title={
+                <>
+                  Explora por{" "}
+                  <Highlight color="#2F81F7">categoría</Highlight>
+                </>
+              }
+              description="Programas diseñados para necesidades reales de personas y empresas."
+            />
+            <SecondaryButton href="/cursos">Ver todos los cursos</SecondaryButton>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((c) => (
+              <CategoryCard key={c.slug} category={c} />
+            ))}
+          </div>
+        </section>
+
+        {/* Cursos destacados */}
+        <section className="py-20">
+          <SectionHeading
+            eyebrow="Los favoritos"
+            title={
+              <>
+                Cursos <Highlight color="#FFC224">más populares</Highlight>
+              </>
+            }
+            description="Los programas con mejor calificación y más estudiantes activos este mes."
+          />
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((course) => (
+              <CourseCard key={course.slug} course={course} />
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <SecondaryButton href="/cursos">Ver todo el catálogo</SecondaryButton>
+          </div>
+        </section>
+
+        {/* Certificaciones */}
+        <section className="py-20">
+          <SectionHeading
+            eyebrow="Lo que nos diferencia"
+            title={
+              <>
+                Certificados que{" "}
+                <Highlight color="#16A34A">realmente cuentan</Highlight>
+              </>
+            }
+            description="Cada curso indica claramente qué tipo de certificado obtienes al finalizar."
+          />
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {certifications.map((cert) => (
+              <div key={cert.title} className="paper-card p-8">
+                <span
+                  className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black"
+                  style={{ backgroundColor: cert.color + "22" }}
+                >
+                  <span
+                    className="block h-3 w-3 rounded-full"
+                    style={{ backgroundColor: cert.color }}
+                  />
                 </span>
-                <div>
-                  <h3 className="font-bold">{e.role}</h3>
-                  <p className="mt-1 text-sm text-black/60">{e.description}</p>
-                </div>
+                <h3 className="text-lg font-bold">{cert.title}</h3>
+                <p className="mt-2 text-sm text-black/60">
+                  {cert.description}
+                </p>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {cert.bullets.map((b) => (
+                    <li key={b} className="flex gap-2">
+                      <span className="text-black/40">✓</span> {b}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
 
-          <a
-            href="#"
-            className="mt-8 inline-block rounded-full border-2 border-black px-6 py-3 text-sm font-semibold"
-          >
-            See full resume
-          </a>
+          <div className="mt-8">
+            <SecondaryButton href="/certificaciones">
+              Conocer más sobre certificaciones
+            </SecondaryButton>
+          </div>
         </section>
 
-        {/* Testimonial */}
+        {/* Cómo funciona */}
         <section className="py-20">
-          <h2 className="max-w-lg text-3xl font-extrabold md:text-4xl">
-            What <Highlight color="#2F81F7">my clients say</Highlight> about
-            my work
-          </h2>
+          <SectionHeading
+            eyebrow="Es muy simple"
+            title={
+              <>
+                Cómo funciona{" "}
+                <Highlight color="#6366F1">{brand.name}</Highlight>
+              </>
+            }
+          />
 
-          <div className="mt-10 rounded-3xl border-2 border-black p-8 shadow-[0_3px_0_0_rgba(0,0,0,1)] md:p-12">
-            <p className="max-w-2xl text-lg">&ldquo;{testimonial.quote}&rdquo;</p>
-            <div className="mt-6 flex items-center gap-3">
-              <span className="block h-10 w-10 rounded-full bg-black/10" />
-              <div>
-                <p className="font-bold">{testimonial.author}</p>
-                <p className="text-sm text-black/50">{testimonial.role}</p>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {steps.map((step, i) => (
+              <div key={step.title} className="paper-card p-6">
+                <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-black text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <h3 className="font-bold">{step.title}</h3>
+                <p className="mt-2 text-sm text-black/60">
+                  {step.description}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* Articles */}
+        {/* CTA empresas */}
         <section className="py-20">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="text-3xl font-extrabold md:text-4xl">
-              Articles &amp; News
-            </h2>
-            <a href="#" className="text-sm font-semibold underline">
-              Browse all articles
-            </a>
+          <div className="flex flex-col items-start gap-6 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between md:p-12">
+            <div>
+              <h3 className="text-2xl font-bold">
+                ¿Necesitas capacitar a tu equipo completo?
+              </h3>
+              <p className="mt-2 max-w-md text-white/60">
+                Panel administrativo, reportes de cumplimiento y certificados
+                MDT o empresariales para toda tu organización.
+              </p>
+            </div>
+            <PrimaryButton
+              href="/empresas"
+              variant="light"
+              className="whitespace-nowrap"
+            >
+              Conocer plan Empresas
+            </PrimaryButton>
           </div>
+        </section>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {articles.map((a) => (
-              <div
-                key={a.title}
-                className="rounded-3xl border-2 border-black p-6 shadow-[0_3px_0_0_rgba(0,0,0,1)]"
-              >
-                <Tag>{a.tag}</Tag>
-                <h3 className="mt-3 text-lg font-bold">{a.title}</h3>
-                <p className="mt-2 text-sm text-black/60">{a.description}</p>
+        {/* Testimonios */}
+        <section className="py-20">
+          <SectionHeading
+            eyebrow="Casos de éxito"
+            title={
+              <>
+                Lo que dicen{" "}
+                <Highlight color="#2F81F7">quienes ya se capacitaron</Highlight>
+              </>
+            }
+          />
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {testimonials.map((t) => (
+              <div key={t.author} className="paper-card flex flex-col p-6">
+                <p className="flex-1 text-sm">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-4 flex items-center gap-3">
+                  <span className="block h-9 w-9 rounded-full bg-black/10" />
+                  <div>
+                    <p className="text-sm font-bold">{t.author}</p>
+                    <p className="text-xs text-black/50">{t.role}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Newsletter */}
-        <section id="contact" className="py-20">
+        <section className="py-20">
           <div className="flex flex-col items-start gap-6 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between md:p-12">
             <div>
-              <h3 className="text-2xl font-bold">Subscribe to my newsletter</h3>
+              <h3 className="text-2xl font-bold">
+                Recibe nuevos cursos y becas antes que nadie
+              </h3>
               <p className="mt-1 max-w-md text-white/60">
-                Get the latest articles and updates straight to your inbox.
+                Sin spam. Solo novedades de cursos, certificaciones y
+                promociones para empresas.
               </p>
             </div>
             <NewsletterForm />

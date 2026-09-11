@@ -8,8 +8,12 @@ const onest = Onest({
 });
 
 export const metadata: Metadata = {
-  title: "Paperfolio - Portfolio Landing Page",
-  description: "Portafolio personal basado en el template Paperfolio.",
+  title: {
+    default: "Hispaniarum — Capacítate y certifícate",
+    template: "%s",
+  },
+  description:
+    "Plataforma de capacitación en línea para profesionales y empresas de Ecuador, con certificados avalados por el Ministerio del Trabajo y certificados empresariales.",
 };
 
 export default function RootLayout({
