@@ -1,6 +1,6 @@
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import Avatar from "@/app/components/Avatar";
+import HeroIllustration from "@/app/components/HeroIllustration";
 import CourseCard from "@/app/components/CourseCard";
 import CategoryCard from "@/app/components/CategoryCard";
 import NewsletterForm from "@/app/components/NewsletterForm";
@@ -69,11 +69,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <Avatar
-            bg="#FFC224"
-            shirt="#FF6B7A"
-            className="mx-auto w-full max-w-sm"
-          />
+          <HeroIllustration className="mx-auto w-full max-w-sm" />
         </section>
 
         {/* Empresas que confían */}
