@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import { PrismaClient } from "@prisma/client";
 import { seedCourses } from "./seed-data";
 
@@ -52,20 +53,26 @@ async function main() {
 
   console.log(`\n${seedCourses.length} cursos insertados.`);
 
-  // Cuenta admin de demo (cambia la contraseña después de probar).
+  // Cuenta admin: nunca hardcodeada (este script vive en un repo público).
+  // Usa ADMIN_EMAIL/ADMIN_PASSWORD si están definidas (recomendado en
+  // producción); si no, genera una contraseña aleatoria y la imprime una
+  // sola vez — cámbiala después de tu primer ingreso.
   const bcrypt = await import("bcryptjs");
-  const adminEmail = "admin@hispaniarum.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@hispaniarum.com";
+  const adminPassword = process.env.ADMIN_PASSWORD || randomBytes(9).toString("base64url");
+
   const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!existingAdmin) {
     await prisma.user.create({
       data: {
         name: "Admin Hispaniarum",
         email: adminEmail,
-        passwordHash: await bcrypt.hash("admin123456", 10),
+        passwordHash: await bcrypt.hash(adminPassword, 10),
         role: "ADMIN",
       },
     });
-    console.log(`\nCuenta admin creada: ${adminEmail} / admin123456`);
+    console.log(`\nCuenta admin creada: ${adminEmail} / ${adminPassword}`);
+    console.log("Guarda esta contraseña ahora — no se vuelve a mostrar.");
   }
 }
 
