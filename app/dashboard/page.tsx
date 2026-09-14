@@ -7,6 +7,7 @@ import { CertBadge, Highlight, PrimaryButton, SectionHeading } from "@/app/compo
 import { getCourse } from "@/app/data/courses";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { issueCertificateIfMissing } from "@/lib/certificates";
 import AdvanceButton from "./AdvanceButton";
 
 export const metadata: Metadata = {
@@ -19,10 +20,17 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const enrollments = await prisma.enrollment.findMany({
-    where: { userId: session.user.id },
-    orderBy: { createdAt: "desc" },
-  });
+  const [enrollments, certificates] = await Promise.all([
+    prisma.enrollment.findMany({
+      where: { userId: session.user.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.certificateIssuance.findMany({
+      where: { userId: session.user.id },
+    }),
+  ]);
+
+  const certByCourse = new Map(certificates.map((c) => [c.courseSlug, c]));
 
   const withCourse = enrollments
     .map((e) => ({ enrollment: e, course: getCourse(e.courseSlug) }))
@@ -30,6 +38,18 @@ export default async function DashboardPage() {
 
   const inProgress = withCourse.filter((e) => e.enrollment.progress < 100);
   const completed = withCourse.filter((e) => e.enrollment.progress >= 100);
+
+  // Auto-sanado: cursos ya completados antes de que existiera la emisión
+  // automática de certificados (o por cualquier otra vía) reciben el suyo.
+  const missingCert = completed.filter((e) => !certByCourse.has(e.course!.slug));
+  if (missingCert.length > 0) {
+    const issued = await Promise.all(
+      missingCert.map((e) => issueCertificateIfMissing(session.user.id, e.course!.slug))
+    );
+    for (const cert of issued) {
+      certByCourse.set(cert.courseSlug, cert);
+    }
+  }
 
   const totalHours = inProgress.reduce(
     (acc, e) => acc + (e.course?.durationHours ?? 0),
@@ -123,25 +143,48 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {completed.map(({ enrollment, course }) => (
-                <div
-                  key={enrollment.id}
-                  className="paper-card flex flex-col gap-3 p-5"
-                >
-                  <div className="flex items-center justify-between">
-                    <p className="font-bold">{course!.title}</p>
-                    <span className="text-xl">🎓</span>
-                  </div>
-                  <CertBadge type={course!.certType} />
-                  <button
-                    disabled
-                    title="Próximamente: descarga en PDF con código de verificación"
-                    className="paper-btn mt-2 w-fit cursor-not-allowed border-2 border-black/20 px-4 py-2 text-xs text-black/40"
+              {completed.map(({ enrollment, course }) => {
+                const cert = certByCourse.get(course!.slug);
+                return (
+                  <div
+                    key={enrollment.id}
+                    className="paper-card flex flex-col gap-3 p-5"
                   >
-                    Descargar certificado (próximamente)
-                  </button>
-                </div>
-              ))}
+                    <div className="flex items-center justify-between">
+                      <p className="font-bold">{course!.title}</p>
+                      <span className="text-xl">🎓</span>
+                    </div>
+                    <CertBadge type={course!.certType} />
+                    {cert ? (
+                      <>
+                        <p className="font-mono text-xs text-black/40">
+                          {cert.code}
+                        </p>
+                        <div className="mt-1 flex flex-wrap gap-2">
+                          <a
+                            href={`/certificados/${cert.code}/pdf`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="paper-btn w-fit border-2 border-black px-4 py-2 text-xs"
+                          >
+                            Descargar PDF
+                          </a>
+                          <Link
+                            href={`/verificar/${cert.code}`}
+                            className="paper-btn w-fit border-2 border-black/20 px-4 py-2 text-xs text-black/60"
+                          >
+                            Ver verificación
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <p className="text-xs text-black/40">
+                        Generando certificado...
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </section>

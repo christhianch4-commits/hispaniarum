@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { issueCertificateIfMissing } from "@/lib/certificates";
 
 export async function checkoutAction(courseSlugs: string[]) {
   const session = await auth();
@@ -42,6 +43,10 @@ export async function advanceProgressAction(enrollmentId: string) {
       completedAt: nextProgress === 100 ? new Date() : null,
     },
   });
+
+  if (nextProgress === 100) {
+    await issueCertificateIfMissing(session.user.id, enrollment.courseSlug);
+  }
 
   revalidatePath("/dashboard");
 }

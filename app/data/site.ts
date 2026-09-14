@@ -142,6 +142,7 @@ export const footerLinks = {
     { label: "Explorar cursos", href: "/cursos" },
     { label: "Categorías", href: "/cursos" },
     { label: "Certificaciones", href: "/certificaciones" },
+    { label: "Verificar certificado", href: "/verificar" },
     { label: "Precios", href: "/precios" },
   ],
   empresas: [
