@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import HeroIllustration from "@/app/components/HeroIllustration";
 import CourseCard from "@/app/components/CourseCard";
 import CategoryCard from "@/app/components/CategoryCard";
 import NewsletterForm from "@/app/components/NewsletterForm";
@@ -76,7 +76,14 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <HeroIllustration className="mx-auto w-full max-w-sm" />
+          <Image
+            src="/hero-illustration.jpg"
+            alt="Persona avanzando un curso en su tablet, rodeada de íconos de capacitación"
+            width={1024}
+            height={1024}
+            priority
+            className="mx-auto w-full max-w-sm rounded-3xl border-2 border-black"
+          />
         </section>
 
         {/* Empresas que confían */}
