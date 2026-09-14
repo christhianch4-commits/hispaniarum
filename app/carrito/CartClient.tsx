@@ -4,18 +4,14 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { courses } from "@/app/data/courses";
+import type { CourseWithId } from "@/lib/queries/courses";
 import { CertBadge } from "@/app/components/ui";
 import { checkoutAction } from "@/app/actions/enrollment";
 
-const seedSlugs = [courses[0].slug, courses[2].slug];
-
-export default function CartClient() {
+export default function CartClient({ initialItems }: { initialItems: CourseWithId[] }) {
   const { status } = useSession();
   const router = useRouter();
-  const [items, setItems] = useState(
-    courses.filter((c) => seedSlugs.includes(c.slug))
-  );
+  const [items, setItems] = useState(initialItems);
   const [checkedOut, setCheckedOut] = useState(false);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);

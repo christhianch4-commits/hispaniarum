@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { CertBadge, Highlight, PrimaryButton, SectionHeading } from "@/app/components/ui";
-import { getCourse } from "@/app/data/courses";
+import { getAllCourses } from "@/lib/queries/courses";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { issueCertificateIfMissing } from "@/lib/certificates";
@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const [enrollments, certificates] = await Promise.all([
+  const [enrollments, certificates, allCourses] = await Promise.all([
     prisma.enrollment.findMany({
       where: { userId: session.user.id },
       orderBy: { createdAt: "desc" },
@@ -28,12 +28,14 @@ export default async function DashboardPage() {
     prisma.certificateIssuance.findMany({
       where: { userId: session.user.id },
     }),
+    getAllCourses(),
   ]);
 
+  const courseBySlug = new Map(allCourses.map((c) => [c.slug, c]));
   const certByCourse = new Map(certificates.map((c) => [c.courseSlug, c]));
 
   const withCourse = enrollments
-    .map((e) => ({ enrollment: e, course: getCourse(e.courseSlug) }))
+    .map((e) => ({ enrollment: e, course: courseBySlug.get(e.courseSlug) }))
     .filter((e) => e.course);
 
   const inProgress = withCourse.filter((e) => e.enrollment.progress < 100);

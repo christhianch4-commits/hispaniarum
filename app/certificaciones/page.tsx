@@ -4,7 +4,7 @@ import Footer from "@/app/components/Footer";
 import CourseCard from "@/app/components/CourseCard";
 import { Highlight, PrimaryButton, SectionHeading } from "@/app/components/ui";
 import { certifications } from "@/app/data/site";
-import { courses } from "@/app/data/courses";
+import { getAllCourses } from "@/lib/queries/courses";
 
 export const metadata: Metadata = {
   title: "Certificaciones | Hispaniarum",
@@ -29,7 +29,8 @@ const steps = [
   },
 ];
 
-export default function CertificacionesPage() {
+export default async function CertificacionesPage() {
+  const courses = await getAllCourses();
   const mdtCourses = courses.filter(
     (c) => c.certType === "mdt" || c.certType === "ambos"
   );

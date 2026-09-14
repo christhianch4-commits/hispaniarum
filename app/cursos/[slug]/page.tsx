@@ -4,14 +4,13 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import CourseCard from "@/app/components/CourseCard";
 import { CertBadge, PrimaryButton, RatingStars, Tag } from "@/app/components/ui";
-import { courses, getCourse, getRelatedCourses } from "@/app/data/courses";
+import { getCourse, getRelatedCourses } from "@/lib/queries/courses";
 import { getCategory } from "@/app/data/categories";
 import { getInstructor } from "@/app/data/instructors";
 import CurriculumAccordion from "./CurriculumAccordion";
 
-export function generateStaticParams() {
-  return courses.map((c) => ({ slug: c.slug }));
-}
+// Sin generateStaticParams: el catálogo se edita desde /admin/cursos en
+// cualquier momento, así que estas páginas se renderizan bajo demanda.
 
 export async function generateMetadata({
   params,
@@ -19,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const course = await getCourse(slug);
   if (!course) return {};
   return {
     title: `${course.title} | Hispaniarum`,
@@ -33,12 +32,12 @@ export default async function CoursePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const course = getCourse(slug);
+  const course = await getCourse(slug);
   if (!course) notFound();
 
   const category = getCategory(course.categorySlug);
   const instructor = getInstructor(course.instructorSlug);
-  const related = getRelatedCourses(course);
+  const related = await getRelatedCourses(course);
 
   return (
     <>

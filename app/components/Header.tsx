@@ -110,6 +110,14 @@ export default function Header() {
         </Link>
         {status === "authenticated" ? (
           <>
+            {session?.user?.role === "ADMIN" && (
+              <Link
+                href="/admin/cursos"
+                className="rounded-full px-3 py-2 text-sm font-medium text-[#2F81F7] hover:bg-black/5"
+              >
+                Admin
+              </Link>
+            )}
             <Link
               href="/dashboard"
               className="rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"

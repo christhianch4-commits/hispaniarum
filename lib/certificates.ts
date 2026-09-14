@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getCourse } from "@/app/data/courses";
+import { getCourse } from "@/lib/queries/courses";
 import { generateCertificateCode } from "@/lib/certificate-code";
 
 /**
@@ -12,7 +12,7 @@ export async function issueCertificateIfMissing(userId: string, courseSlug: stri
   });
   if (existing) return existing;
 
-  const course = getCourse(courseSlug);
+  const course = await getCourse(courseSlug);
   return prisma.certificateIssuance.create({
     data: {
       code: generateCertificateCode(),

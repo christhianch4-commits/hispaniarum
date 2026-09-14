@@ -1,10 +1,13 @@
 import Link from "next/link";
 import type { Category } from "@/app/data/categories";
-import { getCoursesByCategory } from "@/app/data/courses";
 
-export default function CategoryCard({ category }: { category: Category }) {
-  const count = getCoursesByCategory(category.slug).length;
-
+export default function CategoryCard({
+  category,
+  count,
+}: {
+  category: Category;
+  count: number;
+}) {
   return (
     <Link
       href={`/cursos?categoria=${category.slug}`}

@@ -4,13 +4,16 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { Highlight, SectionHeading } from "@/app/components/ui";
 import CatalogClient from "@/app/cursos/CatalogClient";
+import { getAllCourses } from "@/lib/queries/courses";
 
 export const metadata: Metadata = {
   title: "Cursos | Hispaniarum",
   description: "Explora el catálogo completo de cursos de Hispaniarum.",
 };
 
-export default function CursosPage() {
+export default async function CursosPage() {
+  const courses = await getAllCourses();
+
   return (
     <>
       <Header />
@@ -28,7 +31,7 @@ export default function CursosPage() {
 
         <div className="mt-10">
           <Suspense fallback={null}>
-            <CatalogClient />
+            <CatalogClient courses={courses} />
           </Suspense>
         </div>
       </main>

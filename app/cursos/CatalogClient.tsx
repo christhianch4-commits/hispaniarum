@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import CourseCard from "@/app/components/CourseCard";
 import { categories } from "@/app/data/categories";
-import { courses } from "@/app/data/courses";
+import type { CourseWithId } from "@/lib/queries/courses";
 
 const levels = ["Principiante", "Intermedio", "Avanzado"] as const;
 
-export default function CatalogClient() {
+export default function CatalogClient({ courses }: { courses: CourseWithId[] }) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("categoria") ?? "todas";
 
@@ -26,7 +26,7 @@ export default function CatalogClient() {
         c.shortDescription.toLowerCase().includes(query.toLowerCase());
       return matchesCategory && matchesLevel && matchesQuery;
     });
-  }, [category, level, query]);
+  }, [courses, category, level, query]);
 
   return (
     <div>

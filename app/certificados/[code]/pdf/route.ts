@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCourse } from "@/app/data/courses";
+import { getCourse } from "@/lib/queries/courses";
 import { getInstructor } from "@/app/data/instructors";
 import { buildCertificatePdf } from "@/lib/certificate-pdf";
 import type { CertType } from "@/app/data/courses";
@@ -20,7 +20,7 @@ export async function GET(
     return NextResponse.json({ error: "Certificado no encontrado" }, { status: 404 });
   }
 
-  const course = getCourse(certificate.courseSlug);
+  const course = await getCourse(certificate.courseSlug);
   const instructor = course ? getInstructor(course.instructorSlug) : undefined;
   const verifyUrl = new URL(`/verificar/${certificate.code}`, req.nextUrl.origin).toString();
 

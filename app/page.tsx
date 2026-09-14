@@ -12,7 +12,7 @@ import {
   Tag,
 } from "@/app/components/ui";
 import { categories } from "@/app/data/categories";
-import { getFeaturedCourses } from "@/app/data/courses";
+import { getAllCourses, getFeaturedCourses } from "@/lib/queries/courses";
 import { brand, certifications, companyLogos, heroStats, testimonials } from "@/app/data/site";
 
 const steps = [
@@ -33,8 +33,15 @@ const steps = [
   },
 ];
 
-export default function Home() {
-  const featured = getFeaturedCourses();
+export default async function Home() {
+  const [featured, allCourses] = await Promise.all([
+    getFeaturedCourses(),
+    getAllCourses(),
+  ]);
+  const categoryCounts = new Map<string, number>();
+  for (const c of allCourses) {
+    categoryCounts.set(c.categorySlug, (categoryCounts.get(c.categorySlug) ?? 0) + 1);
+  }
 
   return (
     <>
@@ -104,7 +111,11 @@ export default function Home() {
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((c) => (
-              <CategoryCard key={c.slug} category={c} />
+              <CategoryCard
+                key={c.slug}
+                category={c}
+                count={categoryCounts.get(c.slug) ?? 0}
+              />
             ))}
           </div>
         </section>

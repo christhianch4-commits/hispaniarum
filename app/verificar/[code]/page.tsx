@@ -4,7 +4,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { CertBadge, Highlight, PrimaryButton, SectionHeading } from "@/app/components/ui";
 import { prisma } from "@/lib/prisma";
-import { getCourse } from "@/app/data/courses";
+import { getCourse } from "@/lib/queries/courses";
 import { getInstructor } from "@/app/data/instructors";
 import type { CertType } from "@/app/data/courses";
 
@@ -25,7 +25,7 @@ export default async function VerificarCodePage({
     include: { user: true },
   });
 
-  const course = certificate ? getCourse(certificate.courseSlug) : undefined;
+  const course = certificate ? await getCourse(certificate.courseSlug) : undefined;
   const instructor = course ? getInstructor(course.instructorSlug) : undefined;
 
   return (
