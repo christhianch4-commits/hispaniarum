@@ -12,7 +12,7 @@ import {
   Tag,
 } from "@/app/components/ui";
 import { categories } from "@/app/data/categories";
-import { getAllCourses, getFeaturedCourses } from "@/lib/queries/courses";
+import { getAllCourses, getFeaturedCourses, getFreeCourses } from "@/lib/queries/courses";
 import { brand, certifications, heroStats, parent } from "@/app/data/site";
 
 const steps = [
@@ -34,10 +34,12 @@ const steps = [
 ];
 
 export default async function Home() {
-  const [featured, allCourses] = await Promise.all([
+  const [featured, allCourses, freeCourses] = await Promise.all([
     getFeaturedCourses(),
     getAllCourses(),
+    getFreeCourses(),
   ]);
+  const freeClass = freeCourses[0];
   const categoryCounts = new Map<string, number>();
   for (const c of allCourses) {
     categoryCounts.set(c.categorySlug, (categoryCounts.get(c.categorySlug) ?? 0) + 1);
@@ -107,6 +109,35 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* Clase gratuita (captación) */}
+        {freeClass && (
+          <section className="py-16">
+            <div className="grid gap-8 rounded-3xl border-2 border-black bg-[#FDF0E1] p-8 shadow-[0_3px_0_0_var(--ink)] md:grid-cols-[1.4fr_1fr] md:items-center md:p-12">
+              <div>
+                <Tag>Clase gratuita</Tag>
+                <h2 className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
+                  {freeClass.title}
+                </h2>
+                <p className="mt-4 max-w-xl text-black/70">{freeClass.shortDescription}</p>
+                <p className="mt-2 max-w-xl text-sm text-black/60">
+                  Un plan de contingencia reacciona a la falla. El mantenimiento inteligente
+                  la anticipa. Empieza por la clase y descubre el siguiente nivel.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <PrimaryButton href={`/cursos/${freeClass.slug}`}>Ver la clase gratis</PrimaryButton>
+                </div>
+              </div>
+              <ul className="space-y-3 text-sm">
+                {freeClass.whatYouWillLearn.map((item) => (
+                  <li key={item} className="flex gap-2 rounded-xl border-2 border-black bg-white px-4 py-3 font-medium">
+                    <span aria-hidden>✓</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         {/* Categorías */}
         <section className="py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -124,7 +155,9 @@ export default async function Home() {
           </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {categories.map((c) => (
+            {categories
+              .filter((c) => (categoryCounts.get(c.slug) ?? 0) > 0)
+              .map((c) => (
               <CategoryCard
                 key={c.slug}
                 category={c}
@@ -137,13 +170,13 @@ export default async function Home() {
         {/* Cursos destacados */}
         <section className="py-20">
           <SectionHeading
-            eyebrow="Los favoritos"
+            eyebrow="Destacados"
             title={
               <>
-                Cursos <Highlight color="#FFC224">más populares</Highlight>
+                Cursos <Highlight color="#FFC224">destacados</Highlight>
               </>
             }
-            description="Los programas con mejor calificación y más estudiantes activos este mes."
+            description="Programas creados por ingenieros que operan y mantienen infraestructura crítica."
           />
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

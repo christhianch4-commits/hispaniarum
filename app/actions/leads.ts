@@ -73,3 +73,45 @@ export async function deleteLeadAction(leadId: string) {
   revalidatePath("/admin/leads");
   return { ok: true as const };
 }
+
+export type FreeClassState = { error?: string; accessUrl?: string; courseTitle?: string } | undefined;
+
+/**
+ * Clase gratuita: guarda el contacto en NUESTRA base y recién entonces entrega
+ * el enlace de acceso (Hotmart). Así la lista de contactos queda en la academia.
+ */
+export async function requestFreeClass(
+  _prev: FreeClassState,
+  formData: FormData
+): Promise<FreeClassState> {
+  const slug = clean(formData.get("courseSlug"), 160);
+
+  const course = await prisma.course.findFirst({
+    where: { slug, isFree: true, published: true },
+    select: { title: true, freeAccessUrl: true },
+  });
+  if (!course?.freeAccessUrl) return { error: "Esta clase no está disponible por ahora." };
+
+  // Campo trampa anti-bots: responde "éxito" sin guardar ni revelar el enlace.
+  if (clean(formData.get("website"), 100)) return { error: "No pudimos procesar la solicitud." };
+
+  const name = clean(formData.get("name"), 120);
+  const email = clean(formData.get("email"), 200).toLowerCase();
+  const consent = formData.get("consent") === "on";
+
+  if (!name) return { error: "Indica tu nombre." };
+  if (!EMAIL_RE.test(email)) return { error: "Revisa que el correo sea válido." };
+  if (!consent) return { error: "Acepta recibir información para continuar." };
+
+  const existing = await prisma.lead.findFirst({
+    where: { type: "clase-gratuita", email, message: slug },
+  });
+  if (!existing) {
+    await prisma.lead.create({
+      data: { type: "clase-gratuita", name, email, message: slug },
+    });
+    revalidatePath("/admin/leads");
+  }
+
+  return { accessUrl: course.freeAccessUrl, courseTitle: course.title };
+}

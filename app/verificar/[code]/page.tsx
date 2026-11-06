@@ -89,12 +89,14 @@ export default async function VerificarCodePage({
                       })}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase text-black/40">
-                      Duración
-                    </p>
-                    <p className="font-medium">{course.durationHours} horas</p>
-                  </div>
+                  {course.durationHours > 0 && (
+                    <div>
+                      <p className="text-xs font-semibold uppercase text-black/40">
+                        Duración
+                      </p>
+                      <p className="font-medium">{course.durationHours} horas</p>
+                    </div>
+                  )}
                 </div>
                 <div>
                   <p className="mb-1 text-xs font-semibold uppercase text-black/40">

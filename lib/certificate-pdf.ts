@@ -173,13 +173,15 @@ export async function buildCertificatePdf(data: CertificateData): Promise<Uint8A
     font: regular,
     color: gray,
   });
-  page.drawText(`Duración: ${data.durationHours} horas académicas`, {
-    x: 70,
-    y: footerY - 40,
-    size: 10,
-    font: regular,
-    color: gray,
-  });
+  if (data.durationHours > 0) {
+    page.drawText(`Duración: ${data.durationHours} horas académicas`, {
+      x: 70,
+      y: footerY - 40,
+      size: 10,
+      font: regular,
+      color: gray,
+    });
+  }
 
   // QR + código de verificación (derecha)
   const qrSize = 84;

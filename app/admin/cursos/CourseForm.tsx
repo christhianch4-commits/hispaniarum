@@ -12,10 +12,11 @@ import {
 
 type ModuleDraft = {
   title: string;
+  part: string;
   lessons: { title: string; duration: string; free: boolean }[];
 };
 
-const levels = ["Principiante", "Intermedio", "Avanzado"] as const;
+const levels = ["Todos los niveles", "Principiante", "Intermedio", "Avanzado"] as const;
 const certTypes: { value: string; label: string }[] = [
   { value: "empresarial", label: "Certificado empresarial" },
   { value: "mdt", label: "Aval Ministerio del Trabajo" },
@@ -61,18 +62,22 @@ export default function CourseForm({
   const [modules, setModules] = useState<ModuleDraft[]>(
     initialCourse?.modules.map((m) => ({
       title: m.title,
+      part: m.part ?? "",
       lessons: m.lessons.map((l) => ({ title: l.title, duration: l.duration, free: !!l.free })),
     })) ?? []
   );
 
   function addModule() {
-    setModules((prev) => [...prev, { title: "", lessons: [] }]);
+    setModules((prev) => [...prev, { title: "", part: prev[prev.length - 1]?.part ?? "", lessons: [] }]);
   }
   function removeModule(i: number) {
     setModules((prev) => prev.filter((_, idx) => idx !== i));
   }
   function updateModuleTitle(i: number, value: string) {
     setModules((prev) => prev.map((m, idx) => (idx === i ? { ...m, title: value } : m)));
+  }
+  function updateModulePart(i: number, value: string) {
+    setModules((prev) => prev.map((m, idx) => (idx === i ? { ...m, part: value } : m)));
   }
   function addLesson(i: number) {
     setModules((prev) =>
@@ -298,6 +303,187 @@ export default function CourseForm({
       </section>
 
       <section className="paper-card p-6">
+        <h2 className="font-bold">Canal y venta</h2>
+        <p className="mt-1 text-xs text-black/50">
+          Define quién vende el curso y a dónde van los botones de compra.
+        </p>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <label className="flex flex-col gap-1 text-sm">
+            Canal de entrega
+            <select
+              name="channel"
+              defaultValue={initialCourse?.channel ?? "propio"}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            >
+              <option value="hotmart">Hotmart (checkout externo)</option>
+              <option value="propio">Plataforma propia</option>
+              <option value="regulado">Regulado (Ministerio del Trabajo)</option>
+            </select>
+          </label>
+
+          <div className="flex flex-col justify-end gap-2 text-sm">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="published"
+                defaultChecked={initialCourse?.published ?? true}
+                className="h-4 w-4"
+              />
+              Publicado (visible en el sitio)
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="isFree"
+                defaultChecked={initialCourse?.isFree}
+                className="h-4 w-4"
+              />
+              Clase gratuita (captura el correo antes de dar acceso)
+            </label>
+          </div>
+
+          <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+            Hotmart: enlace de checkout individual
+            <input
+              name="checkoutUrl"
+              type="url"
+              defaultValue={initialCourse?.checkoutUrl}
+              placeholder="https://pay.hotmart.com/XXXXXXXX"
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+            Hotmart: enlace de checkout del plan equipos (opcional)
+            <input
+              name="teamCheckoutUrl"
+              type="url"
+              defaultValue={initialCourse?.teamCheckoutUrl}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Plan equipos: precio total (USD)
+            <input
+              name="teamPrice"
+              type="number"
+              min={0}
+              step="0.01"
+              defaultValue={initialCourse?.teamPrice}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Plan equipos: cupos incluidos
+            <input
+              name="teamSeats"
+              type="number"
+              min={1}
+              defaultValue={initialCourse?.teamSeats}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+            Hotmart: ficha del producto (opcional)
+            <input
+              name="productUrl"
+              type="url"
+              defaultValue={initialCourse?.productUrl}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm sm:col-span-2">
+            Clase gratuita: enlace de acceso (se entrega tras dejar el correo)
+            <input
+              name="freeAccessUrl"
+              type="url"
+              defaultValue={initialCourse?.freeAccessUrl}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Slug de su clase gratuita (en un curso de pago)
+            <input
+              name="freeClassSlug"
+              defaultValue={initialCourse?.freeClassSlug}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 font-mono focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Días de garantía
+            <input
+              name="guaranteeDays"
+              type="number"
+              min={0}
+              defaultValue={initialCourse?.guaranteeDays}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            N° total de lecciones (si no las detallas abajo)
+            <input
+              name="lessonsCount"
+              type="number"
+              min={0}
+              defaultValue={initialCourse?.lessonsCount || undefined}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="paper-card p-6">
+        <h2 className="font-bold">Contenido de venta</h2>
+        <div className="mt-4 grid gap-4">
+          <label className="flex flex-col gap-1 text-sm">
+            Para quién es
+            <span className="text-xs text-black/50">
+              Una por línea: «Título — descripción».
+            </span>
+            <textarea
+              name="audience"
+              rows={4}
+              defaultValue={initialCourse?.audience.join("\n")}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Qué incluye
+            <span className="text-xs text-black/50">Una por línea.</span>
+            <textarea
+              name="includes"
+              rows={3}
+              defaultValue={initialCourse?.includes.join("\n")}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Bonos
+            <span className="text-xs text-black/50">
+              Uno por línea: «Título | descripción | inmediato» (o «examen» si se desbloquea al aprobar).
+            </span>
+            <textarea
+              name="bonuses"
+              rows={4}
+              defaultValue={initialCourse?.bonuses
+                .map((b) => b.title + " | " + b.description + " | " + b.unlock)
+                .join("\n")}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Preguntas frecuentes
+            <span className="text-xs text-black/50">Una por línea: «Pregunta | Respuesta».</span>
+            <textarea
+              name="faqs"
+              rows={5}
+              defaultValue={initialCourse?.faqs.map((f) => f.q + " | " + f.a).join("\n")}
+              className="rounded-xl border-2 border-black/10 px-3 py-2 focus:border-black focus:outline-none"
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="paper-card p-6">
         <h2 className="font-bold">Lo que aprenderán</h2>
         <p className="mt-1 text-xs text-black/50">Un punto por línea.</p>
         <textarea
@@ -349,6 +535,12 @@ export default function CourseForm({
                   Quitar módulo
                 </button>
               </div>
+              <input
+                value={mod.part}
+                onChange={(e) => updateModulePart(i, e.target.value)}
+                placeholder="Parte (opcional), p. ej. Parte I · Técnica e IA"
+                className="mt-2 w-full rounded-lg border border-black/10 px-3 py-1.5 text-xs focus:border-black focus:outline-none"
+              />
 
               <div className="mt-3 space-y-2">
                 {mod.lessons.map((lesson, j) => (

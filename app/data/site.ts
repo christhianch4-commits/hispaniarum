@@ -19,7 +19,7 @@ export const parent = {
   name: "INGENIUMAN",
   url: "https://www.ingeniuman.com/es/",
   summary:
-    "Empresa ecuatoriana de ingeniería y mantenimiento con más de 25 años en el mercado, que trabaja con empresas nacionales y multinacionales en sistemas críticos.",
+    "Empresa ecuatoriana de ingeniería y mantenimiento, con más de 25 años de experiencia de sus ingenieros en sistemas críticos para empresas nacionales y multinacionales.",
   areas: [
     "Telecomunicaciones",
     "Petróleos",
@@ -30,7 +30,7 @@ export const parent = {
 };
 
 export const heroStats = [
-  { value: "25+", label: "años de experiencia de INGENIUMAN" },
+  { value: "25+", label: "años de experiencia de nuestros ingenieros" },
   { value: "5", label: "áreas de ingeniería" },
   { value: "100%", label: "certificados verificables en línea" },
 ];

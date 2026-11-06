@@ -1,6 +1,13 @@
 import Link from "next/link";
 import type { CertType } from "@/app/data/courses";
 
+/** "text-white" o "text-black" según el contraste con el color de fondo. */
+export function readableText(color: string) {
+  const hex = color.replace("#", "");
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.55 ? "text-black" : "text-white";
+}
+
 export function Highlight({
   color,
   children,
@@ -9,10 +16,7 @@ export function Highlight({
   children: React.ReactNode;
 }) {
   // Texto oscuro sobre fondos claros (amarillo, cian) para mantener contraste.
-  const hex = color.replace("#", "");
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
-  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  const textClass = luminance > 0.55 ? "text-black" : "text-white";
+  const textClass = readableText(color);
   return (
     <span
       className={`inline-block rounded-lg px-2 ${textClass}`}
@@ -78,7 +82,7 @@ export function CertBadge({ type }: { type: CertType }) {
   const cfg = certConfig[type];
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full border-2 border-black bg-white px-3 py-1 text-xs font-semibold"
+      className="inline-flex items-center gap-1.5 rounded-full border-2 border-black bg-white px-3 py-1 text-xs font-semibold text-black"
     >
       <span
         className="block h-2 w-2 rounded-full"

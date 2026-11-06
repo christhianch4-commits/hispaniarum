@@ -11,9 +11,11 @@ export const metadata: Metadata = {
 
 export default async function CarritoPage() {
   const courses = await getAllCourses();
-  // Semilla de demo: los dos primeros cursos, para mostrar el flujo de
-  // inscripción sin necesidad de haber pasado antes por el catálogo.
-  const seedItems = courses.slice(0, 2);
+  // Los cursos de Hotmart se compran en su propio checkout, no en este carrito.
+  // Semilla de demo: los dos primeros cursos propios de pago.
+  const seedItems = courses
+    .filter((c) => c.channel !== "hotmart" && !c.isFree)
+    .slice(0, 2);
 
   return (
     <>

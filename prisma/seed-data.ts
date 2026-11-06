@@ -1,9 +1,17 @@
 import type { Course } from "@/app/data/courses";
 
+// Los cursos de ejemplo originales no tienen los campos de canal/venta nuevos.
+type SampleCourse = Omit<
+  Course,
+  "channel" | "published" | "isFree" | "lessonsCount" | "audience" | "includes" | "bonuses" | "faqs"
+>;
+
 // Catálogo inicial: se inserta en la base de datos vía `npm run db:seed`.
 // Después de la migración a la base de datos, el catálogo real se edita
 // desde /admin/cursos — este archivo ya no se lee en tiempo de ejecución.
-export const seedCourses: Course[] = [
+// Cursos de ejemplo de la demo inicial. Ya no se siembran: solo se usan sus slugs
+// para ocultarlos (published=false) cuando entra el catálogo real.
+export const seedCourses: SampleCourse[] = [
   {
     slug: "seguridad-salud-ocupacional-sart",
     title: "Seguridad y Salud Ocupacional: Fundamentos SART",
@@ -437,6 +445,183 @@ export const seedCourses: Course[] = [
           { title: "Matriz de prioridades", duration: "12 min" },
           { title: "Técnica pomodoro y bloques de foco", duration: "11 min" },
         ],
+      },
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Catálogo real de INGENIUMAN. Fuente: https://ingeniuman-telecom.netlify.app
+// (landing del curso en Hotmart). Se inserta solo si el slug aún no existe, así
+// nunca pisa lo que se edite después desde /admin/cursos.
+// ---------------------------------------------------------------------------
+
+const HOTMART_CHECKOUT = "https://pay.hotmart.com/P107933213W";
+
+export const realCourses: Course[] = [
+  {
+    slug: "mantenimiento-inteligente-telecom",
+    title: "Mantenimiento Inteligente Telecom",
+    shortDescription:
+      "Pasa de apagar incendios a anticipar fallas: mantenimiento predictivo, IA, KPIs y lenguaje gerencial para redes de telecomunicaciones.",
+    description:
+      "El método que usan los equipos de operación y mantenimiento para que una radiobase, un shelter o un data center no se caigan: mantenimiento predictivo, IA, KPIs y lenguaje gerencial. En 10 módulos, a tu ritmo y con certificado.\n\nCreado por ingenieros de INGENIUMAN que mantienen redes de misión crítica: el curso nace del trabajo en campo, no de la teoría.",
+    categorySlug: "telecomunicaciones",
+    instructorSlug: "equipo-ingeniuman",
+    level: "Todos los niveles",
+    price: 49,
+    rating: 0,
+    reviewsCount: 0,
+    studentsCount: 0,
+    durationHours: 0,
+    color: "#0071BC",
+    certType: "empresarial",
+    featured: true,
+    whatYouWillLearn: [
+      "Anticipar fallas con mantenimiento predictivo e inteligencia artificial",
+      "Entender la arquitectura de datos: IIoT, edge, cloud y flujo de datos",
+      "Aplicar el marco normativo: ISO 55000, ISO 13374 e IEC 62443",
+      "Medir el desempeño con KPIs de mantenimiento: MTBF y MTTR",
+      "Justificar presupuesto ante gerencia con CAPEX y OPEX",
+      "Aplicar mantenimiento seguro y sostenible, incluido LOTO",
+    ],
+    requirements: [],
+    modules: [
+      { part: "Parte I · Técnica e IA", title: "Fundamentos y evolución estratégica del mantenimiento", lessons: [] },
+      { part: "Parte I · Técnica e IA", title: "Inteligencia artificial aplicada al mantenimiento", lessons: [] },
+      { part: "Parte I · Técnica e IA", title: "Arquitectura técnica: IIoT, edge, cloud y flujo de datos", lessons: [] },
+      { part: "Parte I · Técnica e IA", title: "El futuro: mantenimiento prescriptivo", lessons: [] },
+      { part: "Parte I · Técnica e IA", title: "Marco normativo: ISO 55000, ISO 13374 e IEC 62443", lessons: [] },
+      { part: "Parte II · Gestión y personas", title: "Cimientos de gestión: KPIs MTBF y MTTR", lessons: [] },
+      { part: "Parte II · Gestión y personas", title: "Justificación de negocio: CAPEX y OPEX", lessons: [] },
+      { part: "Parte II · Gestión y personas", title: "La paradoja de los datos (síndrome DRIP)", lessons: [] },
+      { part: "Parte II · Gestión y personas", title: "Talento humano: perfiles 4.0 y gestión del cambio", lessons: [] },
+      { part: "Parte II · Gestión y personas", title: "Mantenimiento sostenible y seguro: residuos y LOTO", lessons: [] },
+    ],
+    channel: "hotmart",
+    published: true,
+    isFree: false,
+    checkoutUrl: HOTMART_CHECKOUT,
+    teamCheckoutUrl: `${HOTMART_CHECKOUT}?off=wyjydr6l`,
+    teamSeats: 5,
+    teamPrice: 199,
+    productUrl: "https://go.hotmart.com/P107933213W?dp=1",
+    freeClassSlug: "plan-contingencia-energetica-telecom",
+    guaranteeDays: 7,
+    lessonsCount: 24,
+    audience: [
+      "Técnico de campo — Deja de solo reparar. Radiobases, energía, fibra o transmisión: aprende a anticipar fallas y conviértete en técnico híbrido.",
+      "Supervisor o ingeniero O&M — Habla el idioma de gerencia. MTBF, MTTR, CAPEX, OPEX e ISO 55000 para justificar presupuesto y reducir paradas no planificadas.",
+      "Estudiante o recién graduado — Destaca en tu CV con un certificado en mantenimiento inteligente e IA aplicada al sector, a tu ritmo y desde cualquier país.",
+    ],
+    includes: [
+      "Curso completo: 10 módulos y 24 lecciones en video",
+      "Acceso de por vida en Hotmart, mientras el curso esté disponible",
+      "Examen final y certificado de finalización, al completar los módulos y aprobar el examen",
+    ],
+    bonuses: [
+      {
+        title: "Kit de 48 láminas descargables en PDF",
+        description: "Disponible desde el primer día, para estudiar sin video y repasar en campo.",
+        unlock: "inmediato",
+      },
+      {
+        title: "Plantilla de KPIs MTBF y MTTR en Excel",
+        description: "Registra fallas y calcula MTBF, MTTR y disponibilidad por sitio.",
+        unlock: "examen",
+      },
+      {
+        title: "Checklist LOTO de bloqueo y etiquetado",
+        description: "Una página lista para imprimir y usar antes de intervenir.",
+        unlock: "examen",
+      },
+      {
+        title: "Guía para justificar mantenimiento ante gerencia",
+        description: "CAPEX, OPEX, el costo de una hora caída y un guion para pedir presupuesto.",
+        unlock: "examen",
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Quién enseña el curso?",
+        a: "El equipo de ingenieros de INGENIUMAN: casi 15 años como empresa y más de 25 años de experiencia en campo, manteniendo radioenlaces, fibra, energía y data centers de misión crítica.",
+      },
+      {
+        q: "¿Cuánto tiempo necesito?",
+        a: "Las lecciones son cortas y el acceso es de por vida. Con una lección al día terminas en un mes.",
+      },
+      {
+        q: "¿Es presencial?",
+        a: "No. Es 100% online en Hotmart y lo ves desde el celular o la computadora.",
+      },
+      {
+        q: "¿Qué certificado recibo?",
+        a: "Un certificado de finalización de INGENIUMAN Academy al completar los 10 módulos y aprobar el examen. No es una acreditación oficial externa, pero suma a tu CV y a tu perfil de LinkedIn.",
+      },
+      {
+        q: "¿Y si no me gusta?",
+        a: "Tienes 7 días de garantía: lo pides en Hotmart y te devuelven tu dinero.",
+      },
+      {
+        q: "¿Cuándo recibo los bonos?",
+        a: "El kit de láminas está disponible desde el primer día. La plantilla de KPIs, el checklist LOTO y la guía para gerencia se desbloquean al aprobar el examen final: son tu recompensa por terminar el curso.",
+      },
+      {
+        q: "¿Cómo funciona el plan equipos?",
+        a: "Una persona paga los US$199 en Hotmart y recibe su acceso. Luego envía a ventas1@ingeniuman.com los correos de los otros 4 técnicos y les damos acceso al curso, a los bonos y al certificado.",
+      },
+      {
+        q: "¿Cómo accedo a la clase gratuita?",
+        a: "Entras al enlace, escribes tu correo y Hotmart te envía un código para ingresar.",
+      },
+      {
+        q: "¿Cómo pago?",
+        a: "En la página de pago de Hotmart, con tarjeta, PayPal o los medios disponibles en tu país.",
+      },
+    ],
+  },
+  {
+    slug: "plan-contingencia-energetica-telecom",
+    title: "Plan de contingencia energética para sitios de telecom",
+    shortDescription:
+      "Clase gratuita: cómo mantener la continuidad del servicio cuando falla la energía.",
+    description:
+      "Aprende a mantener la continuidad del servicio cuando falla la energía: respaldo, baterías, generación y prioridades de atención.\n\nUn plan de contingencia reacciona a la falla. El mantenimiento inteligente la anticipa. Empieza por esta clase y descubre el siguiente nivel.",
+    categorySlug: "telecomunicaciones",
+    instructorSlug: "equipo-ingeniuman",
+    level: "Todos los niveles",
+    price: 0,
+    rating: 0,
+    reviewsCount: 0,
+    studentsCount: 0,
+    durationHours: 0,
+    color: "#00B8D9",
+    certType: "empresarial",
+    featured: false,
+    whatYouWillLearn: [
+      "Respaldo de energía en sitios de telecom",
+      "Baterías: qué esperar y cómo cuidarlas",
+      "Generación de respaldo",
+      "Prioridades de atención cuando falla la energía",
+    ],
+    requirements: [],
+    modules: [],
+    channel: "hotmart",
+    published: true,
+    isFree: true,
+    freeAccessUrl:
+      "https://hotmart.com/en/club/karen-portlit/products/8680939/content/97BWlm3aOp",
+    lessonsCount: 0,
+    audience: [],
+    includes: [
+      "Clase completa en video, sin costo",
+      "Acceso con tu correo y un código que te envía Hotmart",
+    ],
+    bonuses: [],
+    faqs: [
+      {
+        q: "¿Cómo accedo a la clase gratuita?",
+        a: "Dejas tu correo aquí, entras al enlace de Hotmart, escribes tu correo de nuevo y Hotmart te envía un código para ingresar.",
       },
     ],
   },

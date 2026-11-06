@@ -7,6 +7,43 @@ export type Category = {
 };
 
 export const categories: Category[] = [
+  // Áreas de ingeniería de INGENIUMAN
+  {
+    slug: "telecomunicaciones",
+    name: "Telecomunicaciones",
+    icon: "📡",
+    color: "#0071BC",
+    description: "Radiobases, fibra, energía y data centers de misión crítica.",
+  },
+  {
+    slug: "petroleos",
+    name: "Petróleos",
+    icon: "🛢️",
+    color: "#0B2A47",
+    description: "Ingeniería, instrumentación y mantenimiento para operaciones petroleras.",
+  },
+  {
+    slug: "electrica",
+    name: "Eléctrica",
+    icon: "⚡",
+    color: "#FFC224",
+    description: "Generación, tableros, puesta a tierra y control industrial.",
+  },
+  {
+    slug: "civil",
+    name: "Civil",
+    icon: "🏗️",
+    color: "#16A34A",
+    description: "Estructuras, obras civiles y mantenimiento de infraestructura.",
+  },
+  {
+    slug: "mecanica",
+    name: "Mecánica",
+    icon: "⚙️",
+    color: "#00B8D9",
+    description: "Montaje electromecánico, estructuras metálicas y sistemas contra incendios.",
+  },
+  // Categorías generales
   {
     slug: "seguridad-ocupacional",
     name: "Seguridad y Salud Ocupacional",

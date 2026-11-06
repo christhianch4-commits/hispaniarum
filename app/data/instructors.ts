@@ -5,12 +5,21 @@ export type Instructor = {
   bio: string;
   avatarBg: string;
   avatarShirt: string;
-  studentsCount: number;
-  coursesCount: number;
-  rating: number;
+  /** Estadísticas opcionales: solo se muestran si son reales. */
+  studentsCount?: number;
+  coursesCount?: number;
+  rating?: number;
 };
 
 export const instructors: Instructor[] = [
+  {
+    slug: "equipo-ingeniuman",
+    name: "Equipo INGENIUMAN",
+    role: "Ingenieros de campo en redes de misión crítica",
+    bio: "El equipo de ingenieros de INGENIUMAN: casi 15 años como empresa y más de 25 años de experiencia en campo, manteniendo radioenlaces, fibra, energía y data centers de misión crítica.",
+    avatarBg: "#0071BC",
+    avatarShirt: "#FFC224",
+  },
   {
     slug: "maria-fernanda-lopez",
     name: "María Fernanda López",

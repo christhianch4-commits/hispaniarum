@@ -107,3 +107,15 @@ Para desplegar manualmente desde este directorio:
 ```bash
 npx vercel --prod
 ```
+
+## Canales de venta y clase gratuita
+
+Cada curso tiene un **canal** (se edita en `/admin/cursos`):
+
+- **Hotmart**: el botón lleva al checkout externo (`checkoutUrl`, y `teamCheckoutUrl` para el plan equipos). Se agrega `src=ingeniuacademy` al enlace para rastrear el origen.
+- **Propio**: se compra con el carrito de la plataforma.
+- **Regulado**: cursos con certificación del Ministerio del Trabajo.
+
+Un curso marcado como **clase gratuita** pide nombre y correo, guarda el contacto en `/admin/leads` y entrega el enlace de acceso (`freeAccessUrl`).
+Desmarcar «Publicado» oculta un curso sin borrarlo (los inscritos conservan sus certificados).
+La semilla (`prisma/seed.ts`) crea el curso real de Hotmart y la clase gratuita, y oculta los cursos de ejemplo.

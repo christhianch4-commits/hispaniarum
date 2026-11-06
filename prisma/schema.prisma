@@ -63,7 +63,7 @@ model Course {
   description      String
   categorySlug     String
   instructorSlug   String
-  level            String // "Principiante" | "Intermedio" | "Avanzado"
+  level            String // "Principiante" | "Intermedio" | "Avanzado" | "Todos los niveles"
   price            Float
   oldPrice         Float?
   rating           Float    @default(4.8)
@@ -78,12 +78,31 @@ model Course {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  // --- Canal de entrega y venta ---
+  channel         String  @default("propio") // "hotmart" | "propio" | "regulado"
+  published       Boolean @default(true) // false = borrador (no aparece en el sitio)
+  isFree          Boolean @default(false) // clase gratuita (captura de leads)
+  checkoutUrl     String? // Hotmart: checkout individual
+  teamCheckoutUrl String? // Hotmart: checkout plan equipos
+  teamSeats       Int? // cupos del plan equipos
+  teamPrice       Float? // precio total del plan equipos
+  productUrl      String? // ficha del producto en Hotmart
+  freeAccessUrl   String? // clase gratuita: enlace de acceso tras dejar el correo
+  freeClassSlug   String? // curso de pago -> slug de su clase gratuita
+  guaranteeDays   Int?
+  lessonsCount    Int     @default(0) // total declarado cuando no se detallan lecciones
+  audience        String  @default("[]") // JSON string[]  (para quién es)
+  includes        String  @default("[]") // JSON string[]  (qué recibes)
+  bonuses         String  @default("[]") // JSON {title, description, unlock}[]
+  faqs            String  @default("[]") // JSON {q, a}[]
+
   modules CourseModule[]
 }
 
 model CourseModule {
   id       String @id @default(cuid())
   title    String
+  part     String? // agrupación opcional, p. ej. "Parte I · Técnica e IA"
   order    Int    @default(0)
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

@@ -11,13 +11,43 @@ export default async function AdminLeadsPage() {
   const leads = await prisma.lead.findMany({ orderBy: { createdAt: "desc" }, take: 500 });
   const companies = leads.filter((l) => l.type === "empresa");
   const subscribers = leads.filter((l) => l.type === "newsletter");
+  const freeClass = leads.filter((l) => l.type === "clase-gratuita");
 
   return (
     <div>
       <h1 className="text-2xl font-extrabold">Solicitudes</h1>
       <p className="mt-1 text-black/60">
-        {companies.length} de empresas · {subscribers.length} suscriptores al newsletter.
+        {companies.length} de empresas · {freeClass.length} de clase gratuita ·{" "}
+        {subscribers.length} suscriptores al newsletter.
       </p>
+
+      <h2 className="mt-10 text-lg font-extrabold">Clase gratuita</h2>
+      <p className="mt-1 text-sm text-black/50">
+        Personas que dejaron su correo para ver la clase. Son tu lista de contactos para
+        ofrecerles el curso completo.
+      </p>
+      <div className="paper-card mt-4 divide-y divide-black/10">
+        {freeClass.map((l) => (
+          <div key={l.id} className="flex flex-wrap items-center justify-between gap-3 px-5 py-3 text-sm">
+            <span>
+              <span className="font-semibold">{l.name}</span>{" "}
+              <a href={"mailto:" + l.email} className="underline">
+                {l.email}
+              </a>
+            </span>
+            <span className="flex items-center gap-4 text-xs text-black/40">
+              {l.message}
+              {l.createdAt.toLocaleDateString("es-EC", { dateStyle: "medium" })}
+              <DeleteLeadButton leadId={l.id} />
+            </span>
+          </div>
+        ))}
+        {freeClass.length === 0 && (
+          <p className="p-6 text-center text-sm text-black/50">
+            Aún nadie ha pedido la clase gratuita.
+          </p>
+        )}
+      </div>
 
       <h2 className="mt-10 text-lg font-extrabold">Empresas</h2>
       <div className="mt-4 grid gap-3">

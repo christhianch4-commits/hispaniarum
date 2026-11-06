@@ -28,7 +28,8 @@ export default async function DashboardPage() {
     prisma.certificateIssuance.findMany({
       where: { userId: session.user.id },
     }),
-    getAllCourses(),
+    // Incluye cursos ocultos: las matrículas y certificados existentes deben seguir visibles.
+    getAllCourses({ includeUnpublished: true }),
   ]);
 
   const courseBySlug = new Map(allCourses.map((c) => [c.slug, c]));

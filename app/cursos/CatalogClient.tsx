@@ -6,7 +6,7 @@ import CourseCard from "@/app/components/CourseCard";
 import { categories } from "@/app/data/categories";
 import type { CourseWithId } from "@/lib/queries/courses";
 
-const levels = ["Principiante", "Intermedio", "Avanzado"] as const;
+const levels = ["Todos los niveles", "Principiante", "Intermedio", "Avanzado"] as const;
 
 export default function CatalogClient({ courses }: { courses: CourseWithId[] }) {
   const searchParams = useSearchParams();
@@ -14,19 +14,22 @@ export default function CatalogClient({ courses }: { courses: CourseWithId[] }) 
 
   const [category, setCategory] = useState(initialCategory);
   const [level, setLevel] = useState<string>("todas");
+  const [price, setPrice] = useState<string>("todos");
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
     return courses.filter((c) => {
       const matchesCategory = category === "todas" || c.categorySlug === category;
       const matchesLevel = level === "todas" || c.level === level;
+      const matchesPrice =
+        price === "todos" || (price === "gratis" ? c.isFree : !c.isFree);
       const matchesQuery =
         query.trim() === "" ||
         c.title.toLowerCase().includes(query.toLowerCase()) ||
         c.shortDescription.toLowerCase().includes(query.toLowerCase());
-      return matchesCategory && matchesLevel && matchesQuery;
+      return matchesCategory && matchesLevel && matchesPrice && matchesQuery;
     });
-  }, [courses, category, level, query]);
+  }, [courses, category, level, price, query]);
 
   return (
     <div>
@@ -45,7 +48,9 @@ export default function CatalogClient({ courses }: { courses: CourseWithId[] }) 
           className="rounded-full border-2 border-black/10 px-4 py-2 text-sm focus:border-black focus:outline-none"
         >
           <option value="todas">Todas las categorías</option>
-          {categories.map((c) => (
+          {categories
+            .filter((c) => courses.some((course) => course.categorySlug === c.slug))
+            .map((c) => (
             <option key={c.slug} value={c.slug}>
               {c.icon} {c.name}
             </option>
@@ -57,12 +62,22 @@ export default function CatalogClient({ courses }: { courses: CourseWithId[] }) 
           onChange={(e) => setLevel(e.target.value)}
           className="rounded-full border-2 border-black/10 px-4 py-2 text-sm focus:border-black focus:outline-none"
         >
-          <option value="todas">Todos los niveles</option>
+          <option value="todas">Cualquier nivel</option>
           {levels.map((l) => (
             <option key={l} value={l}>
               {l}
             </option>
           ))}
+        </select>
+
+        <select
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          className="rounded-full border-2 border-black/10 px-4 py-2 text-sm focus:border-black focus:outline-none"
+        >
+          <option value="todos">Gratis y de pago</option>
+          <option value="gratis">Solo gratis</option>
+          <option value="pago">Solo de pago</option>
         </select>
       </div>
 
