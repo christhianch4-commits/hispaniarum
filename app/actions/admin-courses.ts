@@ -250,3 +250,16 @@ export async function deleteCourseAction(courseId: string) {
   revalidateCatalog(course.slug);
   return { ok: true as const };
 }
+
+/** Muestra u oculta de una vez todos los cursos de ejemplo de la demo. */
+export async function setSamplesPublishedAction(published: boolean) {
+  await requireAdmin();
+  const result = await prisma.course.updateMany({
+    where: { sample: true },
+    data: { published },
+  });
+  revalidatePath("/admin/cursos");
+  revalidatePath("/cursos");
+  revalidatePath("/");
+  return { count: result.count };
+}

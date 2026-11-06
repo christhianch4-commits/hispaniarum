@@ -61,6 +61,8 @@ export type Course = {
   // Canal de entrega y venta
   channel: Channel;
   published: boolean;
+  /** Curso de ejemplo de la demo: se muestra con la etiqueta «Ejemplo». */
+  sample?: boolean;
   isFree: boolean;
   checkoutUrl?: string;
   teamCheckoutUrl?: string;

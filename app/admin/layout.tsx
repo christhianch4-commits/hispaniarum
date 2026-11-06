@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LogoMark from "@/app/components/LogoMark";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { logoutAction } from "@/app/actions/auth";
@@ -15,9 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href="/admin/cursos" className="flex items-center gap-2 font-extrabold">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-xs">
-                I
-              </span>
+              <LogoMark size={32} />
               Admin
             </Link>
             <nav className="hidden gap-4 text-sm font-medium sm:flex">

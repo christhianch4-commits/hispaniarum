@@ -27,6 +27,7 @@ function courseData(course: Course) {
     requirements: JSON.stringify(course.requirements),
     channel: course.channel,
     published: course.published,
+    sample: course.sample ?? false,
     isFree: course.isFree,
     checkoutUrl: course.checkoutUrl,
     teamCheckoutUrl: course.teamCheckoutUrl,
@@ -59,6 +60,28 @@ function courseData(course: Course) {
   };
 }
 
+
+/** Convierte un curso de ejemplo (formato antiguo) en un curso completo. */
+function completeSample(c: (typeof seedCourses)[number]): Course {
+  return {
+    ...c,
+    channel: c.certType === "empresarial" ? "propio" : "regulado",
+    published: true,
+    sample: true,
+    isFree: false,
+    lessonsCount: c.modules.reduce((n, m) => n + m.lessons.length, 0),
+    audience: [],
+    includes: [
+      "Video-clases para ver a tu ritmo",
+      "Material descargable",
+      "Certificado verificable en línea",
+      "Soporte del equipo de INGENIUMAN",
+    ],
+    bonuses: [],
+    faqs: [],
+  };
+}
+
 async function main() {
   // 1) Catálogo real: se crea solo si el slug no existe (nunca pisa ediciones del admin).
   let createdAny = false;
@@ -70,21 +93,41 @@ async function main() {
     console.log(`✓ Curso creado: ${course.title}`);
   }
 
-  // 2) Al entrar el catálogo real por primera vez, los cursos de ejemplo de la
-  //    demo se ocultan (no se borran: pueden tener matrículas y certificados).
-  if (createdAny) {
-    const hidden = await prisma.course.updateMany({
-      where: { slug: { in: seedCourses.map((c) => c.slug) }, published: true },
-      data: { published: false, featured: false },
+  // 2) Cursos de ejemplo de la demo: dan variedad al catálogo mientras se cargan
+  //    los reales. Se marcan `sample` (el sitio los muestra con la etiqueta
+  //    «Ejemplo») y se publican UNA sola vez: si el admin luego los oculta o
+  //    edita, el seed no los vuelve a tocar. No se borran: pueden tener
+  //    matrículas y certificados.
+  for (const sample of seedCourses) {
+    const row = await prisma.course.findUnique({
+      where: { slug: sample.slug },
+      select: { id: true, sample: true },
     });
-    if (hidden.count > 0) console.log(`Ocultados ${hidden.count} cursos de ejemplo.`);
+    const extra = completeSample(sample);
+    if (!row) {
+      await prisma.course.create({ data: courseData(extra) });
+      console.log(`✓ Ejemplo creado: ${sample.title}`);
+    } else if (!row.sample) {
+      await prisma.course.update({
+        where: { id: row.id },
+        data: {
+          sample: true,
+          published: true,
+          featured: extra.featured ?? false,
+          channel: extra.channel,
+          lessonsCount: extra.lessonsCount,
+          includes: JSON.stringify(extra.includes),
+        },
+      });
+      console.log(`✓ Ejemplo publicado: ${sample.title}`);
+    }
   }
 
   // 3) Cuenta admin: nunca hardcodeada (este script vive en un repo público).
   //    Usa ADMIN_EMAIL/ADMIN_PASSWORD si están definidas (recomendado); si no,
   //    genera una contraseña aleatoria y la imprime una sola vez.
   const bcrypt = await import("bcryptjs");
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@hispaniarum.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@ingeniuacademy.com";
   const adminPassword = process.env.ADMIN_PASSWORD || randomBytes(9).toString("base64url");
 
   const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });

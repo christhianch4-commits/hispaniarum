@@ -87,6 +87,11 @@ export default async function CoursePage({
                     Clase gratuita
                   </span>
                 )}
+                {course.sample && (
+                  <span className="rounded-md border-2 border-black bg-[#FFC224] px-2 py-0.5 text-xs font-bold text-black">
+                    Ejemplo
+                  </span>
+                )}
               </div>
               <h1 className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
                 {course.title}
@@ -217,6 +222,12 @@ export default async function CoursePage({
             </div>
           </div>
         </section>
+        {course.sample && (
+          <div className="border-b-2 border-black bg-[#FFC224] px-6 py-2 text-center text-sm font-semibold text-black">
+            Curso de ejemplo: el contenido, el instructor y las cifras son ilustrativos y se
+            reemplazarán por el catálogo real de INGENIUMAN.
+          </div>
+        )}
 
         <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-[1.6fr_1fr]">
           <div>

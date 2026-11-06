@@ -94,6 +94,7 @@ function mapCourse(row: CourseRow): CourseWithId {
     modules,
     channel: row.channel as Channel,
     published: row.published,
+    sample: row.sample,
     isFree: row.isFree,
     checkoutUrl: row.checkoutUrl ?? undefined,
     teamCheckoutUrl: row.teamCheckoutUrl ?? undefined,

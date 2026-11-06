@@ -4,6 +4,7 @@ import { getAllCourses } from "@/lib/queries/courses";
 import { getCategory } from "@/app/data/categories";
 import { channelLabels } from "@/app/data/courses";
 import DeleteCourseButton from "./DeleteCourseButton";
+import SamplesToggle from "./SamplesToggle";
 
 export const metadata: Metadata = {
   title: "Cursos | Admin INGENIUACADEMY",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default async function AdminCursosPage() {
   const courses = await getAllCourses({ includeUnpublished: true });
   const publishedCount = courses.filter((c) => c.published).length;
+  const samples = courses.filter((c) => c.sample);
 
   return (
     <div>
@@ -29,6 +31,10 @@ export default async function AdminCursosPage() {
           + Nuevo curso
         </Link>
       </div>
+
+      {samples.length > 0 && (
+        <SamplesToggle visible={samples.filter((c) => c.published).length} total={samples.length} />
+      )}
 
       <div className="mt-8 overflow-x-auto">
         <table className="w-full min-w-[760px] border-separate border-spacing-y-2 text-sm">
@@ -60,6 +66,11 @@ export default async function AdminCursosPage() {
                     >
                       {course.title}
                     </Link>
+                    {course.sample && (
+                      <span className="ml-2 rounded-md bg-[#FFC224] px-1.5 py-0.5 align-middle text-[10px] font-bold uppercase">
+                        Ejemplo
+                      </span>
+                    )}
                     <p className="text-xs text-black/40">{course.slug}</p>
                   </td>
                   <td>{category?.name ?? course.categorySlug}</td>

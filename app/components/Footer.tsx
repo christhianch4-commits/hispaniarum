@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LogoMark from "./LogoMark";
 import { brand, footerLinks, parent } from "@/app/data/site";
 
 function LinkColumn({
@@ -32,9 +33,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 md:grid-cols-5">
         <div className="md:col-span-2">
           <div className="mb-3 flex items-center gap-2 text-lg font-bold">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-black text-xs">
-              I
-            </span>
+            <LogoMark size={36} />
             {brand.name}
           </div>
           <p className="max-w-xs text-sm text-black/60">{brand.description}</p>

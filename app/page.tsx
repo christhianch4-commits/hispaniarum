@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import CourseCard from "@/app/components/CourseCard";
+import CourseShowcase from "@/app/components/CourseShowcase";
+import Reveal from "@/app/components/Reveal";
 import CategoryCard from "@/app/components/CategoryCard";
 import NewsletterForm from "@/app/components/NewsletterForm";
 import {
@@ -12,7 +13,7 @@ import {
   Tag,
 } from "@/app/components/ui";
 import { categories } from "@/app/data/categories";
-import { getAllCourses, getFeaturedCourses, getFreeCourses } from "@/lib/queries/courses";
+import { getAllCourses, getFreeCourses } from "@/lib/queries/courses";
 import { brand, certifications, heroStats, parent } from "@/app/data/site";
 
 const steps = [
@@ -34,8 +35,7 @@ const steps = [
 ];
 
 export default async function Home() {
-  const [featured, allCourses, freeCourses] = await Promise.all([
-    getFeaturedCourses(),
+  const [allCourses, freeCourses] = await Promise.all([
     getAllCourses(),
     getFreeCourses(),
   ]);
@@ -139,7 +139,7 @@ export default async function Home() {
         )}
 
         {/* Categorías */}
-        <section className="py-20">
+        <Reveal><section className="py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading
               eyebrow="Catálogo"
@@ -165,25 +165,25 @@ export default async function Home() {
               />
             ))}
           </div>
-        </section>
+        </section></Reveal>
 
-        {/* Cursos destacados */}
+        {/* Cursos: vitrina con pestañas */}
         <section className="py-20">
-          <SectionHeading
-            eyebrow="Destacados"
-            title={
-              <>
-                Cursos <Highlight color="#FFC224">destacados</Highlight>
-              </>
-            }
-            description="Programas creados por ingenieros que operan y mantienen infraestructura crítica."
-          />
+          <Reveal>
+            <SectionHeading
+              eyebrow="Catálogo"
+              title={
+                <>
+                  Cursos para <Highlight color="#FFC224">cada área</Highlight>
+                </>
+              }
+              description="Programas creados por ingenieros que operan y mantienen infraestructura crítica, y cursos de gestión para equipos."
+            />
+          </Reveal>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((course) => (
-              <CourseCard key={course.slug} course={course} />
-            ))}
-          </div>
+          <Reveal className="mt-10" delay={80}>
+            <CourseShowcase courses={allCourses} />
+          </Reveal>
 
           <div className="mt-8">
             <SecondaryButton href="/cursos">Ver todo el catálogo</SecondaryButton>
@@ -191,7 +191,7 @@ export default async function Home() {
         </section>
 
         {/* Certificaciones */}
-        <section className="py-20">
+        <Reveal><section className="py-20">
           <SectionHeading
             eyebrow="Lo que nos diferencia"
             title={
@@ -235,10 +235,10 @@ export default async function Home() {
               Conocer más sobre certificaciones
             </SecondaryButton>
           </div>
-        </section>
+        </section></Reveal>
 
         {/* Cómo funciona */}
-        <section className="py-20">
+        <Reveal><section className="py-20">
           <SectionHeading
             eyebrow="Es muy simple"
             title={
@@ -262,10 +262,10 @@ export default async function Home() {
               </div>
             ))}
           </div>
-        </section>
+        </section></Reveal>
 
         {/* CTA empresas */}
-        <section className="py-20">
+        <Reveal><section className="py-20">
           <div className="flex flex-col items-start gap-6 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between md:p-12">
             <div>
               <h3 className="text-2xl font-bold">
@@ -285,10 +285,10 @@ export default async function Home() {
               Ver opciones para empresas
             </PrimaryButton>
           </div>
-        </section>
+        </section></Reveal>
 
         {/* Newsletter */}
-        <section className="py-20">
+        <Reveal><section className="py-20">
           <div className="flex flex-col items-start gap-6 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between md:p-12">
             <div>
               <h3 className="text-2xl font-bold">
@@ -301,7 +301,7 @@ export default async function Home() {
             </div>
             <NewsletterForm />
           </div>
-        </section>
+        </section></Reveal>
       </main>
 
       <Footer />

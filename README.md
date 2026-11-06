@@ -1,4 +1,4 @@
-# Hispaniarum
+# INGENIUACADEMY
 
 Plataforma de capacitación en línea (estilo Coursera / Udemy / Hotmart) para
 profesionales y empresas de Ecuador, construida con [Next.js](https://nextjs.org)
@@ -91,7 +91,7 @@ producción real (no solo demo) con clientes pagando.
 
 ## Deploy
 
-Ya está conectado a Vercel (proyecto `hispaniarum`, deploy automático en
+Ya está conectado a Vercel (proyecto `ingeniuacademy`, deploy automático en
 cada push a `main`). El build (`vercel-build`) corre, en este orden:
 `prisma generate` → `prisma db push` (sincroniza el esquema con Neon,
 seguro porque no usamos migraciones aún) → `npm run db:seed` (siembra el

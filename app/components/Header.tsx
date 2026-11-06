@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { categories } from "@/app/data/categories";
 import { brand } from "@/app/data/site";
+import LogoMark from "./LogoMark";
 
 const navLinks = [
   { label: "Cursos", href: "/cursos" },
@@ -34,9 +35,7 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50 mx-auto flex w-fit max-w-[95vw] items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-2 shadow-[0_2px_0_0_var(--ink)]">
       <Link href="/" className="flex items-center gap-2 pl-1 pr-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-xs font-black">
-          I
-        </span>
+        <LogoMark size={32} />
         <span className="hidden text-sm font-extrabold sm:block">
           {brand.name}
         </span>

@@ -9,8 +9,8 @@ type SampleCourse = Omit<
 // Catálogo inicial: se inserta en la base de datos vía `npm run db:seed`.
 // Después de la migración a la base de datos, el catálogo real se edita
 // desde /admin/cursos — este archivo ya no se lee en tiempo de ejecución.
-// Cursos de ejemplo de la demo inicial. Ya no se siembran: solo se usan sus slugs
-// para ocultarlos (published=false) cuando entra el catálogo real.
+// Cursos de ejemplo de la demo inicial. Se siembran marcados como `sample` para
+// dar variedad al catálogo; el admin puede ocultarlos en bloque.
 export const seedCourses: SampleCourse[] = [
   {
     slug: "seguridad-salud-ocupacional-sart",
