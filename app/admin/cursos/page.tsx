@@ -5,7 +5,7 @@ import { getCategory } from "@/app/data/categories";
 import DeleteCourseButton from "./DeleteCourseButton";
 
 export const metadata: Metadata = {
-  title: "Cursos | Admin Hispaniarum",
+  title: "Cursos | Admin INGENIUACADEMY",
 };
 
 export default async function AdminCursosPage() {

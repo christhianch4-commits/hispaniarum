@@ -13,7 +13,7 @@ import {
 } from "@/app/components/ui";
 import { categories } from "@/app/data/categories";
 import { getAllCourses, getFeaturedCourses } from "@/lib/queries/courses";
-import { brand, certifications, companyLogos, heroStats, testimonials } from "@/app/data/site";
+import { brand, certifications, heroStats, parent } from "@/app/data/site";
 
 const steps = [
   {
@@ -29,7 +29,7 @@ const steps = [
   {
     title: "Obtén tu certificado",
     description:
-      "Al completar el curso recibes tu certificado empresarial o el aval del Ministerio del Trabajo, listo para compartir.",
+      "Al completar el curso recibes tu certificado de finalización o, en los programas que lo incluyen, la certificación del Ministerio del Trabajo.",
   },
 ];
 
@@ -51,11 +51,10 @@ export default async function Home() {
         {/* Hero */}
         <section className="grid gap-10 py-20 md:grid-cols-2 md:items-center">
           <div>
-            <Tag>Plataforma de capacitación en Ecuador</Tag>
+            <Tag>Powered by INGENIUMAN · +25 años en ingeniería</Tag>
             <h1 className="mt-4 text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
-              Capacítate y{" "}
-              <Highlight color="#FF6B7A">certifícate</Highlight> sin salir
-              de casa
+              Aprende de ingenieros que operan en{" "}
+              <Highlight color="#D62828">campo</Highlight> y certifícate
             </h1>
             <p className="mt-6 max-w-md text-black/60">
               {brand.description}
@@ -67,7 +66,7 @@ export default async function Home() {
               </SecondaryButton>
             </div>
 
-            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className="mt-10 grid grid-cols-3 gap-4">
               {heroStats.map((s) => (
                 <div key={s.label}>
                   <p className="text-xl font-extrabold">{s.value}</p>
@@ -82,21 +81,29 @@ export default async function Home() {
             width={1024}
             height={1024}
             priority
-            className="mx-auto w-full max-w-sm rounded-3xl border-2 border-black"
+            className="mx-auto w-full max-w-sm rounded-3xl"
           />
         </section>
 
-        {/* Empresas que confían */}
+        {/* Respaldo INGENIUMAN */}
         <section className="border-y-2 border-black/5 py-10">
-          <p className="text-center text-xs font-semibold uppercase tracking-wide text-black/40">
-            Empresas que ya capacitan a sus equipos con {brand.name}
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {companyLogos.map((name) => (
-              <span key={name} className="text-lg font-bold text-black/25">
-                {name}
-              </span>
-            ))}
+          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
+            <div className="max-w-xl">
+              <p className="text-xs font-semibold uppercase tracking-wide text-black/40">
+                Respaldado por {parent.name}
+              </p>
+              <p className="mt-2 text-sm text-black/60">{parent.summary}</p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-2">
+              {parent.areas.map((area) => (
+                <span
+                  key={area}
+                  className="rounded-full border-2 border-black px-3 py-1 text-xs font-semibold"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -108,7 +115,7 @@ export default async function Home() {
               title={
                 <>
                   Explora por{" "}
-                  <Highlight color="#2F81F7">categoría</Highlight>
+                  <Highlight color="#0071BC">categoría</Highlight>
                 </>
               }
               description="Programas diseñados para necesidades reales de personas y empresas."
@@ -204,7 +211,7 @@ export default async function Home() {
             title={
               <>
                 Cómo funciona{" "}
-                <Highlight color="#6366F1">{brand.name}</Highlight>
+                <Highlight color="#00B8D9">{brand.name}</Highlight>
               </>
             }
           />
@@ -232,8 +239,9 @@ export default async function Home() {
                 ¿Necesitas capacitar a tu equipo completo?
               </h3>
               <p className="mt-2 max-w-md text-white/60">
-                Panel administrativo, reportes de cumplimiento y certificados
-                MDT o empresariales para toda tu organización.
+                Cupos corporativos con certificado para cada técnico, o
+                programas a la medida impartidos por ingenieros de{" "}
+                {parent.name}.
               </p>
             </div>
             <PrimaryButton
@@ -241,36 +249,8 @@ export default async function Home() {
               variant="light"
               className="whitespace-nowrap"
             >
-              Conocer plan Empresas
+              Ver opciones para empresas
             </PrimaryButton>
-          </div>
-        </section>
-
-        {/* Testimonios */}
-        <section className="py-20">
-          <SectionHeading
-            eyebrow="Casos de éxito"
-            title={
-              <>
-                Lo que dicen{" "}
-                <Highlight color="#2F81F7">quienes ya se capacitaron</Highlight>
-              </>
-            }
-          />
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <div key={t.author} className="paper-card flex flex-col p-6">
-                <p className="flex-1 text-sm">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-4 flex items-center gap-3">
-                  <span className="block h-9 w-9 rounded-full bg-black/10" />
-                  <div>
-                    <p className="text-sm font-bold">{t.author}</p>
-                    <p className="text-xs text-black/50">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 
@@ -279,11 +259,11 @@ export default async function Home() {
           <div className="flex flex-col items-start gap-6 rounded-3xl bg-black p-8 text-white sm:flex-row sm:items-center sm:justify-between md:p-12">
             <div>
               <h3 className="text-2xl font-bold">
-                Recibe nuevos cursos y becas antes que nadie
+                Entérate primero de los nuevos cursos
               </h3>
               <p className="mt-1 max-w-md text-white/60">
-                Sin spam. Solo novedades de cursos, certificaciones y
-                promociones para empresas.
+                Sin spam. Solo novedades de cursos, fechas de programas en
+                vivo y certificaciones.
               </p>
             </div>
             <NewsletterForm />

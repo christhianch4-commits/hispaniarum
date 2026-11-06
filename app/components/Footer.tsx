@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brand, footerLinks } from "@/app/data/site";
+import { brand, footerLinks, parent } from "@/app/data/site";
 
 function LinkColumn({
   title,
@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="md:col-span-2">
           <div className="mb-3 flex items-center gap-2 text-lg font-bold">
             <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-black text-xs">
-              H
+              I
             </span>
             {brand.name}
           </div>
@@ -73,7 +73,14 @@ export default function Footer() {
           © {new Date().getFullYear()} {brand.name}. Todos los derechos
           reservados.
         </span>
-        <span>Hecho con Next.js.</span>
+        <a
+          href={parent.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Powered by {parent.name}
+        </a>
       </div>
     </footer>
   );

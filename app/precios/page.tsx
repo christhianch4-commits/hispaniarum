@@ -6,8 +6,8 @@ import { faqs, plans } from "@/app/data/site";
 import FaqItem from "./FaqItem";
 
 export const metadata: Metadata = {
-  title: "Precios | Hispaniarum",
-  description: "Planes para profesionales y empresas en Hispaniarum.",
+  title: "Precios | INGENIUACADEMY",
+  description: "Cursos individuales, cupos para equipos y programas a la medida en INGENIUACADEMY.",
 };
 
 export default function PreciosPage() {
@@ -20,12 +20,12 @@ export default function PreciosPage() {
           eyebrow="Precios"
           title={
             <>
-              Un plan para{" "}
-              <Highlight color="#FFC224">cada etapa</Highlight> de tu
-              crecimiento
+              Paga por{" "}
+              <Highlight color="#FFC224">curso</Highlight> o capacita a todo
+              tu equipo
             </>
           }
-          description="Cambia o cancela tu plan cuando quieras. Sin contratos forzosos."
+          description="Cada curso muestra su precio. Para equipos y programas a la medida te enviamos una cotización."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -35,8 +35,8 @@ export default function PreciosPage() {
               className={
                 "flex flex-col rounded-3xl border-2 border-black p-8 " +
                 (plan.highlighted
-                  ? "bg-black text-white shadow-[0_4px_0_0_rgba(0,0,0,1)]"
-                  : "bg-white shadow-[0_3px_0_0_rgba(0,0,0,1)]")
+                  ? "bg-black text-white shadow-[0_4px_0_0_var(--ink)]"
+                  : "bg-white shadow-[0_3px_0_0_var(--ink)]")
               }
             >
               {plan.highlighted && (
@@ -81,23 +81,13 @@ export default function PreciosPage() {
               </ul>
 
               <div className="mt-8">
-                {plan.name === "Empresas" ? (
-                  plan.highlighted ? (
-                    <PrimaryButton href="/empresas" variant="light" className="w-full text-center">
-                      Hablar con ventas
-                    </PrimaryButton>
-                  ) : (
-                    <SecondaryButton href="/empresas" className="block w-full text-center">
-                      Hablar con ventas
-                    </SecondaryButton>
-                  )
-                ) : plan.highlighted ? (
-                  <PrimaryButton href="/registro" variant="light" className="w-full text-center">
-                    Comenzar ahora
+                {plan.highlighted ? (
+                  <PrimaryButton href={plan.cta.href} variant="light" className="w-full text-center">
+                    {plan.cta.label}
                   </PrimaryButton>
                 ) : (
-                  <SecondaryButton href="/registro" className="block w-full text-center">
-                    Comenzar ahora
+                  <SecondaryButton href={plan.cta.href} className="block w-full text-center">
+                    {plan.cta.label}
                   </SecondaryButton>
                 )}
               </div>
@@ -111,7 +101,7 @@ export default function PreciosPage() {
             title={
               <>
                 Todo lo que debes{" "}
-                <Highlight color="#2F81F7">saber</Highlight>
+                <Highlight color="#0071BC">saber</Highlight>
               </>
             }
           />

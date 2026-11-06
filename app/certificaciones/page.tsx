@@ -7,9 +7,9 @@ import { certifications } from "@/app/data/site";
 import { getAllCourses } from "@/lib/queries/courses";
 
 export const metadata: Metadata = {
-  title: "Certificaciones | Hispaniarum",
+  title: "Certificaciones | INGENIUACADEMY",
   description:
-    "Certificados avalados ante el Ministerio del Trabajo del Ecuador y certificados empresariales Hispaniarum.",
+    "Cursos con certificación del Ministerio del Trabajo del Ecuador y certificados de finalización INGENIUACADEMY, todos verificables en línea.",
 };
 
 const steps = [
@@ -48,7 +48,7 @@ export default async function CertificacionesPage() {
               <Highlight color="#16A34A">abren puertas</Highlight>
             </>
           }
-          description="Cada curso en Hispaniarum indica con claridad qué tipo de certificado obtienes al finalizar: aval del Ministerio del Trabajo o certificado empresarial propio."
+          description="Cada curso indica con claridad qué certificado obtienes al finalizar: certificación del Ministerio del Trabajo (en los programas que la incluyen) o certificado de finalización de INGENIUACADEMY."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -82,7 +82,7 @@ export default async function CertificacionesPage() {
             title={
               <>
                 Cómo obtienes tu{" "}
-                <Highlight color="#2F81F7">certificado</Highlight>
+                <Highlight color="#0071BC">certificado</Highlight>
               </>
             }
           />
@@ -101,6 +101,7 @@ export default async function CertificacionesPage() {
           </div>
         </section>
 
+        {mdtCourses.length > 0 && (
         <section className="mt-20">
           <SectionHeading
             eyebrow="Certificación oficial"
@@ -110,7 +111,7 @@ export default async function CertificacionesPage() {
                 <Highlight color="#16A34A">Ministerio del Trabajo</Highlight>
               </>
             }
-            description="Ideales para cumplir procesos de capacitación obligatoria, auditorías SART y programas de prevención de riesgos."
+            description="Programas que siguen el proceso de certificación del Ministerio del Trabajo. Revisa en cada ficha los requisitos y la modalidad."
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {mdtCourses.map((c) => (
@@ -118,6 +119,7 @@ export default async function CertificacionesPage() {
             ))}
           </div>
         </section>
+        )}
 
         <section className="mt-20 rounded-3xl bg-black p-8 text-white sm:flex sm:items-center sm:justify-between md:p-12">
           <div>

@@ -2,46 +2,55 @@ import type { Metadata } from "next";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { Highlight, PrimaryButton, SectionHeading, Tag } from "@/app/components/ui";
-import { brand, companyLogos, testimonials } from "@/app/data/site";
+import { brand, parent } from "@/app/data/site";
 import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Empresas | Hispaniarum",
+  title: "Empresas | INGENIUACADEMY",
   description:
-    "Capacita a todo tu equipo con reportes centralizados y certificados avalados por el Ministerio del Trabajo del Ecuador.",
+    "Capacitación técnica para equipos de campo: cupos corporativos o programas a la medida, impartidos por ingenieros de INGENIUMAN.",
 };
 
 const benefits = [
   {
-    title: "Panel administrativo centralizado",
+    title: "Cupos corporativos",
     description:
-      "Inscribe colaboradores, asigna cursos por área o cargo, y visualiza el avance de todo tu equipo en un solo lugar.",
-    color: "#2F81F7",
+      "Compra cupos para 5 o más técnicos. Cada persona recibe su propio acceso y su certificado.",
+    color: "#0071BC",
   },
   {
-    title: "Reportes de cumplimiento",
+    title: "Certificados verificables",
     description:
-      "Exporta reportes de horas de capacitación y certificación por colaborador, listos para auditorías internas o del Ministerio del Trabajo.",
+      "Cada certificado tiene código QR y verificación pública, para que tus clientes o auditores comprueben su autenticidad.",
     color: "#16A34A",
   },
   {
-    title: "Certificación con validez",
+    title: "Hecho por ingenieros de campo",
     description:
-      "Cursos con aval del Ministerio del Trabajo para cumplir la capacitación obligatoria, y certificados empresariales para el resto del catálogo.",
-    color: "#FF6B7A",
+      "Los contenidos nacen de la operación real de INGENIUMAN en telecomunicaciones, petróleos, eléctrica, civil y mecánica.",
+    color: "#D62828",
   },
   {
-    title: "Contenido a medida",
+    title: "Programas a la medida",
     description:
-      "Adaptamos o creamos cursos junto a tus especialistas internos para necesidades específicas de tu industria.",
+      "Adaptamos o creamos cursos para tu industria, tus equipos y tus procedimientos, en modalidad en línea, en vivo o presencial.",
     color: "#FFC224",
   },
 ];
 
-const plans = [
-  { size: "Hasta 20 colaboradores", price: "desde $199 / mes" },
-  { size: "De 21 a 100 colaboradores", price: "desde $599 / mes" },
-  { size: "Más de 100 colaboradores", price: "Cotización personalizada" },
+const process = [
+  {
+    title: "Cuéntanos tu necesidad",
+    description: "Qué equipo quieres capacitar, en qué temas y para cuántas personas.",
+  },
+  {
+    title: "Recibe una propuesta",
+    description: "Te proponemos cursos existentes o un programa a la medida, con alcance y precio.",
+  },
+  {
+    title: "Capacita y certifica",
+    description: "Tu equipo se capacita y cada participante recibe su certificado verificable.",
+  },
 ];
 
 export default function EmpresasPage() {
@@ -54,13 +63,13 @@ export default function EmpresasPage() {
           <div>
             <Tag>Capacitación corporativa</Tag>
             <h1 className="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
-              Certifica a tu <Highlight color="#6366F1">equipo completo</Highlight>{" "}
-              con un solo panel
+              Capacita a tu <Highlight color="#00B8D9">equipo técnico</Highlight>{" "}
+              con ingenieros de campo
             </h1>
             <p className="mt-6 max-w-md text-black/60">
-              {brand.name} para empresas centraliza la capacitación,
-              seguimiento y certificación de tu personal, incluyendo cursos
-              con aval del Ministerio del Trabajo del Ecuador.
+              {brand.name} para empresas ofrece cupos corporativos y programas a
+              la medida, respaldados por {parent.name}, con certificados
+              verificables para cada participante.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryButton href="#contacto">Hablar con ventas</PrimaryButton>
@@ -69,18 +78,27 @@ export default function EmpresasPage() {
 
           <div className="paper-card p-8">
             <p className="text-sm font-semibold uppercase tracking-wide text-black/40">
-              Ya confían en nosotros
+              Respaldado por {parent.name}
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-4">
-              {companyLogos.map((name) => (
+            <p className="mt-3 text-sm text-black/60">{parent.summary}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {parent.areas.map((area) => (
                 <span
-                  key={name}
-                  className="rounded-xl border-2 border-black/10 px-3 py-4 text-center text-sm font-bold text-black/60"
+                  key={area}
+                  className="rounded-full border-2 border-black px-3 py-1 text-xs font-semibold"
                 >
-                  {name}
+                  {area}
                 </span>
               ))}
             </div>
+            <a
+              href={parent.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-block text-sm font-semibold underline"
+            >
+              Conocer INGENIUMAN
+            </a>
           </div>
         </section>
 
@@ -90,7 +108,7 @@ export default function EmpresasPage() {
             title={
               <>
                 Todo lo que tu empresa necesita para{" "}
-                <Highlight color="#2F81F7">capacitar</Highlight>
+                <Highlight color="#0071BC">capacitar</Highlight>
               </>
             }
           />
@@ -110,42 +128,22 @@ export default function EmpresasPage() {
 
         <section className="mt-20">
           <SectionHeading
-            eyebrow="Inversión"
+            eyebrow="Cómo trabajamos"
             title={
               <>
-                Planes según el{" "}
-                <Highlight color="#FFC224">tamaño de tu equipo</Highlight>
+                Tres pasos para{" "}
+                <Highlight color="#FFC224">capacitar a tu equipo</Highlight>
               </>
             }
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {plans.map((p) => (
-              <div key={p.size} className="paper-card p-6 text-center">
-                <p className="font-bold">{p.size}</p>
-                <p className="mt-2 text-black/60">{p.price}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-20">
-          <SectionHeading
-            eyebrow="Casos de éxito"
-            title={
-              <>
-                Empresas que ya{" "}
-                <Highlight color="#FF6B7A">capacitan con nosotros</Highlight>
-              </>
-            }
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <div key={t.author} className="paper-card flex flex-col p-6">
-                <p className="flex-1 text-sm">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-4">
-                  <p className="text-sm font-bold">{t.author}</p>
-                  <p className="text-xs text-black/50">{t.role}</p>
-                </div>
+            {process.map((step, i) => (
+              <div key={step.title} className="paper-card p-6">
+                <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-black text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <h3 className="font-bold">{step.title}</h3>
+                <p className="mt-2 text-sm text-black/60">{step.description}</p>
               </div>
             ))}
           </div>
@@ -153,22 +151,31 @@ export default function EmpresasPage() {
 
         <section
           id="contacto"
-          className="mt-20 grid gap-8 rounded-3xl border-2 border-black p-8 shadow-[0_3px_0_0_rgba(0,0,0,1)] md:grid-cols-2 md:p-12"
+          className="mt-20 grid gap-8 rounded-3xl border-2 border-black p-8 shadow-[0_3px_0_0_var(--ink)] md:grid-cols-2 md:p-12"
         >
           <div>
             <h2 className="text-2xl font-extrabold">
               Cuéntanos sobre tu empresa
             </h2>
             <p className="mt-3 text-black/60">
-              Un asesor te contactará en menos de 24 horas hábiles para
-              diseñar el plan de capacitación ideal para tu equipo.
+              Un asesor del equipo de {parent.name} te contactará para diseñar
+              el plan de capacitación ideal para tu equipo.
             </p>
             <p className="mt-6 text-sm text-black/50">
               También puedes escribirnos a{" "}
               <a href={`mailto:${brand.email}`} className="font-semibold underline">
                 {brand.email}
               </a>{" "}
-              o llamarnos al {brand.phone}.
+              o por{" "}
+              <a
+                href={brand.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold underline"
+              >
+                WhatsApp ({brand.phone})
+              </a>
+              .
             </p>
           </div>
 

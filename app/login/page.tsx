@@ -4,7 +4,7 @@ import Footer from "@/app/components/Footer";
 import AuthForm from "@/app/components/AuthForm";
 
 export const metadata: Metadata = {
-  title: "Ingresar | Hispaniarum",
+  title: "Ingresar | INGENIUACADEMY",
 };
 
 export default async function LoginPage({

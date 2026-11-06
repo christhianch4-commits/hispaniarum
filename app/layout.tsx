@@ -10,11 +10,11 @@ const onest = Onest({
 
 export const metadata: Metadata = {
   title: {
-    default: "Hispaniarum — Capacítate y certifícate",
+    default: "INGENIUACADEMY — Capacitación técnica por INGENIUMAN",
     template: "%s",
   },
   description:
-    "Plataforma de capacitación en línea para profesionales y empresas de Ecuador, con certificados avalados por el Ministerio del Trabajo y certificados empresariales.",
+    "Capacitación técnica por INGENIUMAN: cursos para profesionales y empresas, con certificados verificables en línea y programas con certificación del Ministerio del Trabajo.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${onest.variable} antialiased`}>
-      <body className="min-h-screen bg-white text-[#0a0a0a] font-sans">
+      <body className="min-h-screen bg-white text-black font-sans">
         <Providers>{children}</Providers>
       </body>
     </html>

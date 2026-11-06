@@ -16,13 +16,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <div className="flex items-center gap-6">
             <Link href="/admin/cursos" className="flex items-center gap-2 font-extrabold">
               <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-xs">
-                H
+                I
               </span>
               Admin
             </Link>
             <nav className="hidden gap-4 text-sm font-medium sm:flex">
               <Link href="/admin/cursos" className="hover:underline">
                 Cursos
+              </Link>
+              <Link href="/admin/leads" className="hover:underline">
+                Solicitudes
               </Link>
             </nav>
           </div>

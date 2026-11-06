@@ -6,7 +6,7 @@ import { getAllCourses } from "@/lib/queries/courses";
 import CartClient from "./CartClient";
 
 export const metadata: Metadata = {
-  title: "Carrito | Hispaniarum",
+  title: "Carrito | INGENIUACADEMY",
 };
 
 export default async function CarritoPage() {
@@ -23,7 +23,7 @@ export default async function CarritoPage() {
           eyebrow="Carrito"
           title={
             <>
-              Tu <Highlight color="#FF6B7A">carrito</Highlight>
+              Tu <Highlight color="#D62828">carrito</Highlight>
             </>
           }
         />

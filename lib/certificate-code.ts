@@ -1,6 +1,6 @@
 import { randomBytes } from "crypto";
 
-// Código legible tipo "HISP-7K2M-9XQP", sin caracteres ambiguos (0/O, 1/I).
+// Código legible tipo "ING-7K2M-9XQP", sin caracteres ambiguos (0/O, 1/I).
 const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 function randomBlock(length: number) {
@@ -13,5 +13,5 @@ function randomBlock(length: number) {
 }
 
 export function generateCertificateCode() {
-  return `HISP-${randomBlock(4)}-${randomBlock(4)}`;
+  return `ING-${randomBlock(4)}-${randomBlock(4)}`;
 }

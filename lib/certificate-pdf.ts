@@ -4,14 +4,14 @@ import type { CertType } from "@/app/data/courses";
 
 const CERT_LABELS: Record<CertType, string> = {
   mdt: "Certificado avalado ante el Ministerio del Trabajo del Ecuador",
-  empresarial: "Certificado empresarial Hispaniarum",
+  empresarial: "Certificado de finalización INGENIUACADEMY",
   ambos: "Certificado avalado ante el Ministerio del Trabajo + Certificado empresarial",
 };
 
 const CERT_COLORS: Record<CertType, [number, number, number]> = {
   mdt: [0x16 / 255, 0xa3 / 255, 0x4a / 255],
-  empresarial: [0x2f / 255, 0x81 / 255, 0xf7 / 255],
-  ambos: [0x63 / 255, 0x66 / 255, 0xf1 / 255],
+  empresarial: [0x00 / 255, 0x71 / 255, 0xbc / 255],
+  ambos: [0x0e / 255, 0x74 / 255, 0x90 / 255],
 };
 
 export type CertificateData = {
@@ -35,7 +35,7 @@ export async function buildCertificatePdf(data: CertificateData): Promise<Uint8A
   const italic = await doc.embedFont(StandardFonts.HelveticaOblique);
 
   const [r, g, b] = CERT_COLORS[data.certType];
-  const black = rgb(0, 0, 0);
+  const black = rgb(0x0b / 255, 0x2a / 255, 0x47 / 255);
   const gray = rgb(0.42, 0.42, 0.42);
 
   // Fondo blanco + marco negro estilo "paper"
@@ -66,8 +66,8 @@ export async function buildCertificatePdf(data: CertificateData): Promise<Uint8A
   const centerX = width / 2;
 
   // Marca
-  page.drawText("HISPANIARUM", {
-    x: centerX - bold.widthOfTextAtSize("HISPANIARUM", 14) / 2,
+  page.drawText("INGENIUACADEMY", {
+    x: centerX - bold.widthOfTextAtSize("INGENIUACADEMY", 14) / 2,
     y: height - 90,
     size: 14,
     font: bold,

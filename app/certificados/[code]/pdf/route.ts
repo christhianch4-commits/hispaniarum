@@ -27,7 +27,7 @@ export async function GET(
   const pdfBytes = await buildCertificatePdf({
     studentName: certificate.user.name,
     courseTitle: course?.title ?? certificate.courseSlug,
-    instructorName: instructor?.name ?? "Hispaniarum",
+    instructorName: instructor?.name ?? "INGENIUMAN",
     durationHours: course?.durationHours ?? 0,
     certType: certificate.certType as CertType,
     code: certificate.code,

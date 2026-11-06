@@ -1,116 +1,108 @@
 // Contenido editable de la plataforma. Ajusta estos valores para
-// personalizar textos, planes, testimonios y preguntas frecuentes.
+// personalizar textos, planes y preguntas frecuentes.
+//
+// Regla: aquí solo va información verificable del cliente. No agregar cifras,
+// logos de clientes ni testimonios hasta contar con datos y permisos reales.
 
 export const brand = {
-  name: "Hispaniarum",
-  tagline: "Capacítate. Certifícate. Crece.",
+  name: "INGENIUACADEMY",
+  tagline: "Capacitación técnica por INGENIUMAN",
   description:
-    "La plataforma de capacitación en línea para profesionales y empresas de Ecuador. Cursos prácticos, certificados con validez y seguimiento del progreso real.",
-  email: "hola@hispaniarum.com",
-  phone: "+593 99 000 0000",
+    "Capacitación técnica para profesionales y empresas, creada por ingenieros con más de 25 años de experiencia en campo. Certificados verificables en línea.",
+  email: "ventas@ingeniuman.com",
+  phone: "+593 98 841 9215",
+  whatsapp: "https://wa.me/593988419215",
+};
+
+// Empresa que respalda la academia (datos de https://www.ingeniuman.com/es/).
+export const parent = {
+  name: "INGENIUMAN",
+  url: "https://www.ingeniuman.com/es/",
+  summary:
+    "Empresa ecuatoriana de ingeniería y mantenimiento con más de 25 años en el mercado, que trabaja con empresas nacionales y multinacionales en sistemas críticos.",
+  areas: [
+    "Telecomunicaciones",
+    "Petróleos",
+    "Eléctrica",
+    "Civil",
+    "Mecánica",
+  ],
 };
 
 export const heroStats = [
-  { value: "40+", label: "cursos disponibles" },
-  { value: "12.000+", label: "estudiantes activos" },
-  { value: "180+", label: "empresas capacitadas" },
-  { value: "4.8/5", label: "calificación promedio" },
+  { value: "25+", label: "años de experiencia de INGENIUMAN" },
+  { value: "5", label: "áreas de ingeniería" },
+  { value: "100%", label: "certificados verificables en línea" },
 ];
 
 export const certifications = [
   {
-    title: "Certificado avalado ante el Ministerio del Trabajo",
+    title: "Cursos con certificación del Ministerio del Trabajo",
     color: "#16A34A",
     description:
-      "Cursos alineados a los procesos de capacitación reconocidos por el Ministerio del Trabajo del Ecuador, ideales para cumplir horas de capacitación obligatoria y auditorías SART.",
+      "Algunos programas siguen el proceso de certificación del Ministerio del Trabajo del Ecuador. La ficha de cada curso indica si lo incluye.",
     bullets: [
-      "Válido para procesos de auditoría e inspección laboral",
+      "Se indica de forma clara en cada curso",
       "Código de verificación único por certificado",
-      "Respaldo del programa formativo y su contenido",
+      "Registro de participantes y calificaciones",
     ],
   },
   {
-    title: "Certificado empresarial Hispaniarum",
-    color: "#2F81F7",
+    title: "Certificado de finalización INGENIUACADEMY",
+    color: "#0071BC",
     description:
-      "Certificación propia de la plataforma, pensada para reforzar el currículum profesional y demostrar competencias adquiridas ante cualquier empleador.",
+      "Certificado propio de la academia para los cursos que no pasan por una certificación oficial. Demuestra las horas y competencias adquiridas.",
     bullets: [
       "Descargable en PDF con código QR de verificación",
-      "Incluye horas académicas y calificación final",
-      "Compartible directamente en LinkedIn",
+      "Incluye horas académicas y nombre del instructor",
+      "Cualquier empresa puede comprobar su autenticidad en línea",
     ],
   },
 ];
 
+// `cta` define a dónde lleva el botón de cada plan.
 export const plans = [
   {
-    name: "Individual",
-    price: "$14.90",
-    period: "/ mes",
-    description: "Para profesionales que quieren avanzar a su propio ritmo.",
+    name: "Curso individual",
+    price: "Según el curso",
+    period: "",
+    description: "Compra solo el curso que necesitas, con su certificado.",
     features: [
-      "Acceso a todo el catálogo de cursos",
-      "Certificados empresariales incluidos",
-      "Seguimiento de progreso y notas",
-      "Cancela cuando quieras",
+      "El precio se indica en cada curso",
+      "Certificado verificable en línea",
+      "Material y recursos del curso",
+      "Soporte del equipo de INGENIUMAN",
     ],
     highlighted: false,
+    cta: { label: "Ver cursos", href: "/cursos" },
   },
   {
-    name: "Profesional",
-    price: "$24.90",
-    period: "/ mes",
-    description: "Incluye certificación avalada ante el Ministerio del Trabajo.",
+    name: "Plan equipos",
+    price: "Desde 5 técnicos",
+    period: "",
+    description: "Cupos corporativos para capacitar a tu equipo de campo.",
     features: [
-      "Todo lo del plan Individual",
-      "Certificados con aval del Ministerio del Trabajo",
-      "Rutas de aprendizaje guiadas",
-      "Soporte prioritario",
+      "Cupos para 5 o más técnicos",
+      "Cada técnico recibe su acceso y su certificado",
+      "Precio por persona menor al individual",
+      "Atención directa con el equipo comercial",
     ],
     highlighted: true,
+    cta: { label: "Solicitar cotización", href: "/empresas#contacto" },
   },
   {
-    name: "Empresas",
-    price: "Personalizado",
+    name: "A la medida",
+    price: "Cotización",
     period: "",
-    description: "Capacita a todo tu equipo con reportes centralizados.",
+    description: "Programas diseñados para la operación de tu empresa.",
     features: [
-      "Panel administrativo por empresa",
-      "Reportes de avance y cumplimiento",
-      "Certificados empresariales y MDT",
-      "Ejecutivo de cuenta dedicado",
+      "Contenido adaptado a tu industria y equipos",
+      "Impartido por ingenieros de INGENIUMAN",
+      "Modalidad en línea, en vivo o presencial",
+      "Certificado para cada participante",
     ],
     highlighted: false,
-  },
-];
-
-export const companyLogos = [
-  "Banco Andino",
-  "Grupo Litoral",
-  "Ferretería Nacional",
-  "Aseguradora Confianza",
-  "Distribuidora Andes",
-  "Textiles del Pacífico",
-];
-
-export const testimonials = [
-  {
-    quote:
-      "Certificamos a todo nuestro personal operativo en seguridad ocupacional en menos de un mes. El seguimiento del avance por empresa nos ahorró muchísimo tiempo.",
-    author: "Paola Jiménez",
-    role: "Jefa de Talento Humano, Grupo Litoral",
-  },
-  {
-    quote:
-      "El curso de liderazgo cambió la forma en que dirijo a mi equipo. Contenido práctico, nada de relleno, y el certificado quedó perfecto en mi LinkedIn.",
-    author: "Diego Montalvo",
-    role: "Coordinador de Operaciones",
-  },
-  {
-    quote:
-      "Como pyme necesitábamos cumplir con la capacitación obligatoria sin complicarnos. Hispaniarum nos dio el certificado avalado y todo el respaldo documental.",
-    author: "Andrea Salazar",
-    role: "Gerente General, Ferretería Nacional",
+    cta: { label: "Hablar con ventas", href: "/empresas#contacto" },
   },
 ];
 
@@ -118,22 +110,22 @@ export const faqs = [
   {
     question: "¿Los certificados tienen validez oficial?",
     answer:
-      "Los cursos marcados con el sello del Ministerio del Trabajo emiten un certificado con código de verificación, alineado a los procesos de capacitación reconocidos por esa entidad. Los demás cursos emiten un certificado empresarial propio de Hispaniarum, válido como respaldo de horas de formación.",
+      "Depende del curso. Los programas que cuentan con certificación del Ministerio del Trabajo lo indican en su ficha. Los demás emiten un certificado de finalización de INGENIUACADEMY, con código QR y verificación pública en línea.",
   },
   {
-    question: "¿Puedo capacitar a todo mi equipo desde una sola cuenta?",
+    question: "¿Puedo capacitar a todo mi equipo?",
     answer:
-      "Sí. El plan Empresas incluye un panel administrativo donde puedes inscribir colaboradores, asignar cursos y descargar reportes de avance y certificación por persona.",
+      "Sí. Con el plan equipos compras cupos para 5 o más técnicos y cada uno recibe su propio acceso y certificado. Si necesitas más personas o un contenido distinto, escríbenos desde la sección Empresas.",
   },
   {
-    question: "¿Los cursos tienen fecha límite?",
+    question: "¿Cómo funcionan los horarios y plazos?",
     answer:
-      "No. Puedes avanzar a tu propio ritmo mientras tu suscripción esté activa. El progreso queda guardado y puedes retomar cualquier curso cuando quieras.",
+      "Los cursos grabados puedes tomarlos a tu ritmo. Los cursos en vivo tienen fechas definidas, que se indican en la ficha de cada programa.",
   },
   {
-    question: "¿Qué pasa si mi empresa necesita un curso a medida?",
+    question: "¿Pueden diseñar un curso a la medida de mi empresa?",
     answer:
-      "Contáctanos desde la sección Empresas. Diseñamos programas de capacitación a medida junto a nuestros instructores para necesidades específicas de tu industria.",
+      "Sí. Nuestro equipo de ingenieros puede preparar un programa específico para tu industria, tus equipos y tus procedimientos. Cuéntanos tu necesidad y te enviamos una propuesta.",
   },
 ];
 
@@ -147,7 +139,7 @@ export const footerLinks = {
   ],
   empresas: [
     { label: "Capacitación corporativa", href: "/empresas" },
-    { label: "Certificado MDT", href: "/certificaciones" },
+    { label: "Certificaciones", href: "/certificaciones" },
     { label: "Hablar con ventas", href: "/empresas#contacto" },
   ],
   soporte: [

@@ -9,7 +9,7 @@ import { getInstructor } from "@/app/data/instructors";
 import type { CertType } from "@/app/data/courses";
 
 export const metadata: Metadata = {
-  title: "Verificar certificado | Hispaniarum",
+  title: "Verificar certificado | INGENIUACADEMY",
 };
 
 export default async function VerificarCodePage({
@@ -41,7 +41,7 @@ export default async function VerificarCodePage({
               </>
             ) : (
               <>
-                Certificado <Highlight color="#FF4A60">no encontrado</Highlight>
+                Certificado <Highlight color="#D62828">no encontrado</Highlight>
               </>
             )
           }

@@ -1,25 +1,35 @@
 @import "tailwindcss";
 
+/*
+ * Paleta INGENIUACADEMY (powered by INGENIUMAN)
+ * - ink:   azul marino corporativo; reemplaza al negro en textos, contornos y sombras
+ * - brand: azul del logo de INGENIUMAN (acciones y énfasis)
+ * - cyan:  acento tecnológico (heredado del microsite del curso)
+ * - amber: acento cálido "paper" (resaltados, destacados)
+ * - red:   rojo del logo, uso puntual (errores, alertas, énfasis fuerte)
+ */
 :root {
+  --ink: #0b2a47;
+  --brand: #0071bc;
+  --cyan: #00b8d9;
+  --amber: #ffc224;
+  --red: #d62828;
+  --green: #16a34a;
+  --cream: #fdf0e1;
   --background: #ffffff;
-  --foreground: #0a0a0a;
-  --accent-pink: #ff6b7a;
-  --accent-red: #ff4a60;
-  --accent-blue: #2f81f7;
-  --accent-yellow: #ffc224;
-  --accent-indigo: #6366f1;
-  --accent-green: #16a34a;
+  --foreground: var(--ink);
 }
 
 @theme inline {
+  --color-black: var(--ink);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-accent-pink: var(--accent-pink);
-  --color-accent-red: var(--accent-red);
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-yellow: var(--accent-yellow);
-  --color-accent-indigo: var(--accent-indigo);
-  --color-accent-green: var(--accent-green);
+  --color-brand: var(--brand);
+  --color-cyan: var(--cyan);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
+  --color-green: var(--green);
+  --color-cream: var(--cream);
   --font-sans: var(--font-onest);
 }
 
@@ -28,11 +38,11 @@ body {
   color: var(--foreground);
 }
 
-/* Tarjetas y botones "paper": contorno negro + sombra dura desplazada */
+/* Tarjetas y botones "paper": contorno de tinta + sombra dura desplazada */
 .paper-card {
-  border: 2px solid #000;
+  border: 2px solid var(--ink);
   border-radius: 1.5rem;
-  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 3px 0 0 var(--ink);
   background: #fff;
 }
 

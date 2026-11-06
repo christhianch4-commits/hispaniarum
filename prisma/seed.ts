@@ -65,7 +65,7 @@ async function main() {
   if (!existingAdmin) {
     await prisma.user.create({
       data: {
-        name: "Admin Hispaniarum",
+        name: "Admin INGENIUACADEMY",
         email: adminEmail,
         passwordHash: await bcrypt.hash(adminPassword, 10),
         role: "ADMIN",

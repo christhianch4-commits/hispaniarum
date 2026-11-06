@@ -21,7 +21,7 @@ const certTypes: { value: string; label: string }[] = [
   { value: "mdt", label: "Aval Ministerio del Trabajo" },
   { value: "ambos", label: "MDT + Empresarial" },
 ];
-const colorSwatches = ["#FF6B7A", "#2F81F7", "#FFC224", "#FF4A60", "#6366F1", "#16A34A", "#0A0A0A"];
+const colorSwatches = ["#0071BC", "#00B8D9", "#FFC224", "#D62828", "#16A34A", "#0B2A47"];
 
 function slugify(text: string) {
   return text
@@ -111,7 +111,7 @@ export default function CourseForm({
       <input type="hidden" name="modulesJson" value={JSON.stringify(modules)} />
 
       {state?.error && (
-        <p className="rounded-xl bg-[#FF4A60]/10 px-4 py-3 text-sm font-medium text-[#FF4A60]">
+        <p className="rounded-xl bg-[#D62828]/10 px-4 py-3 text-sm font-medium text-[#D62828]">
           {state.error}
         </p>
       )}
@@ -276,7 +276,7 @@ export default function CourseForm({
                   className="h-7 w-7 rounded-full border-2"
                   style={{
                     backgroundColor: c,
-                    borderColor: color === c ? "#0a0a0a" : "transparent",
+                    borderColor: color === c ? "#0B2A47" : "transparent",
                   }}
                   aria-label={c}
                 />
@@ -344,7 +344,7 @@ export default function CourseForm({
                 <button
                   type="button"
                   onClick={() => removeModule(i)}
-                  className="text-xs font-semibold text-[#FF4A60]"
+                  className="text-xs font-semibold text-[#D62828]"
                 >
                   Quitar módulo
                 </button>
@@ -376,7 +376,7 @@ export default function CourseForm({
                     <button
                       type="button"
                       onClick={() => removeLesson(i, j)}
-                      className="text-xs text-[#FF4A60]"
+                      className="text-xs text-[#D62828]"
                     >
                       ✕
                     </button>

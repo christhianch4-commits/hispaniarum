@@ -6,7 +6,7 @@ import { instructors } from "@/app/data/instructors";
 import CourseForm from "../../CourseForm";
 
 export const metadata: Metadata = {
-  title: "Editar curso | Admin Hispaniarum",
+  title: "Editar curso | Admin INGENIUACADEMY",
 };
 
 export default async function EditarCursoPage({

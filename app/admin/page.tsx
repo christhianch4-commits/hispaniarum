@@ -3,15 +3,16 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Admin | Hispaniarum",
+  title: "Admin | INGENIUACADEMY",
 };
 
 export default async function AdminHomePage() {
-  const [courseCount, userCount, enrollmentCount, certCount] = await Promise.all([
+  const [courseCount, userCount, enrollmentCount, certCount, leadCount] = await Promise.all([
     prisma.course.count(),
     prisma.user.count(),
     prisma.enrollment.count(),
     prisma.certificateIssuance.count(),
+    prisma.lead.count({ where: { type: "empresa" } }),
   ]);
 
   const stats = [
@@ -19,6 +20,7 @@ export default async function AdminHomePage() {
     { label: "Usuarios registrados", value: userCount },
     { label: "Inscripciones", value: enrollmentCount },
     { label: "Certificados emitidos", value: certCount },
+    { label: "Solicitudes de empresas", value: leadCount },
   ];
 
   return (
@@ -41,6 +43,12 @@ export default async function AdminHomePage() {
           className="paper-btn inline-block bg-black px-6 py-3 text-sm text-white"
         >
           Gestionar cursos
+        </Link>
+        <Link
+          href="/admin/leads"
+          className="paper-btn ml-3 inline-block border-2 border-black px-6 py-3 text-sm"
+        >
+          Ver solicitudes
         </Link>
       </div>
     </div>

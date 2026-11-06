@@ -4,7 +4,7 @@ import { instructors } from "@/app/data/instructors";
 import CourseForm from "../CourseForm";
 
 export const metadata: Metadata = {
-  title: "Nuevo curso | Admin Hispaniarum",
+  title: "Nuevo curso | Admin INGENIUACADEMY",
 };
 
 export default function NuevoCursoPage() {

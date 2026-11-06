@@ -30,7 +30,7 @@ export default function AuthForm({
       </p>
 
       {state?.error && (
-        <p className="mt-4 rounded-xl bg-[#FF4A60]/10 px-4 py-2 text-sm font-medium text-[#FF4A60]">
+        <p className="mt-4 rounded-xl bg-[#D62828]/10 px-4 py-2 text-sm font-medium text-[#D62828]">
           {state.error}
         </p>
       )}

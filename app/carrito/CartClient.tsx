@@ -121,7 +121,7 @@ export default function CartClient({ initialItems }: { initialItems: CourseWithI
           <span>${total}</span>
         </div>
         {error && (
-          <p className="mt-3 text-center text-xs font-medium text-[#FF4A60]">
+          <p className="mt-3 text-center text-xs font-medium text-[#D62828]">
             {error}
           </p>
         )}

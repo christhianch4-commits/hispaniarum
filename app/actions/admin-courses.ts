@@ -68,7 +68,7 @@ function courseDataFromForm(formData: FormData) {
     price: Number(formData.get("price") || 0),
     oldPrice: formData.get("oldPrice") ? Number(formData.get("oldPrice")) : null,
     durationHours: Number(formData.get("durationHours") || 0),
-    color: String(formData.get("color") || "#2F81F7").trim(),
+    color: String(formData.get("color") || "#0071BC").trim(),
     certType: String(formData.get("certType") || "empresarial").trim(),
     featured: formData.get("featured") === "on",
     whatYouWillLearn: JSON.stringify(parseListField(formData.get("whatYouWillLearn"))),

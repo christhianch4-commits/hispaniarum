@@ -8,9 +8,14 @@ export function Highlight({
   color: string;
   children: React.ReactNode;
 }) {
+  // Texto oscuro sobre fondos claros (amarillo, cian) para mantener contraste.
+  const hex = color.replace("#", "");
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  const textClass = luminance > 0.55 ? "text-black" : "text-white";
   return (
     <span
-      className="inline-block rounded-lg px-2 text-white"
+      className={`inline-block rounded-lg px-2 ${textClass}`}
       style={{ backgroundColor: color }}
     >
       {children}
@@ -65,8 +70,8 @@ const certConfig: Record<
   { label: string; color: string }
 > = {
   mdt: { label: "Aval Ministerio del Trabajo", color: "#16A34A" },
-  empresarial: { label: "Certificado empresarial", color: "#2F81F7" },
-  ambos: { label: "MDT + Empresarial", color: "#6366F1" },
+  empresarial: { label: "Certificado empresarial", color: "#0071BC" },
+  ambos: { label: "MDT + Empresarial", color: "#00B8D9" },
 };
 
 export function CertBadge({ type }: { type: CertType }) {

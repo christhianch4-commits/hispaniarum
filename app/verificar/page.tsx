@@ -5,9 +5,9 @@ import { Highlight, SectionHeading } from "@/app/components/ui";
 import VerifyForm from "./VerifyForm";
 
 export const metadata: Metadata = {
-  title: "Verificar certificado | Hispaniarum",
+  title: "Verificar certificado | INGENIUACADEMY",
   description:
-    "Verifica la autenticidad de un certificado emitido por Hispaniarum.",
+    "Verifica la autenticidad de un certificado emitido por INGENIUACADEMY.",
 };
 
 export default function VerificarPage() {
@@ -22,7 +22,7 @@ export default function VerificarPage() {
               Verifica un <Highlight color="#16A34A">certificado</Highlight>
             </>
           }
-          description="Ingresa el código que aparece en el certificado (o escanea su código QR) para confirmar que fue emitido por Hispaniarum."
+          description="Ingresa el código que aparece en el certificado (o escanea su código QR) para confirmar que fue emitido por INGENIUACADEMY."
         />
 
         <div className="mt-10 paper-card p-8">

@@ -7,8 +7,8 @@ import CatalogClient from "@/app/cursos/CatalogClient";
 import { getAllCourses } from "@/lib/queries/courses";
 
 export const metadata: Metadata = {
-  title: "Cursos | Hispaniarum",
-  description: "Explora el catálogo completo de cursos de Hispaniarum.",
+  title: "Cursos | INGENIUACADEMY",
+  description: "Explora el catálogo completo de cursos de INGENIUACADEMY.",
 };
 
 export default async function CursosPage() {
@@ -23,7 +23,7 @@ export default async function CursosPage() {
           title={
             <>
               Encuentra el curso{" "}
-              <Highlight color="#FF6B7A">ideal para ti</Highlight>
+              <Highlight color="#D62828">ideal para ti</Highlight>
             </>
           }
           description="Filtra por categoría, nivel o busca directamente por tema."

@@ -20,7 +20,7 @@ export default function VerifyForm() {
         required
         value={code}
         onChange={(e) => setCode(e.target.value)}
-        placeholder="HISP-XXXX-XXXX"
+        placeholder="ING-XXXX-XXXX"
         className="w-full rounded-2xl border-2 border-black/10 px-4 py-3 text-sm uppercase tracking-wide focus:border-black focus:outline-none"
       />
       <button

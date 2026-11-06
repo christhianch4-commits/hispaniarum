@@ -21,7 +21,7 @@ export async function generateMetadata({
   const course = await getCourse(slug);
   if (!course) return {};
   return {
-    title: `${course.title} | Hispaniarum`,
+    title: `${course.title} | INGENIUACADEMY`,
     description: course.shortDescription,
   };
 }

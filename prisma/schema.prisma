@@ -100,3 +100,18 @@ model CourseLesson {
   moduleId String
   module   CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 }
+
+// Solicitudes recibidas desde el sitio (formulario de empresas y newsletter).
+// Se revisan en /admin/leads.
+model Lead {
+  id        String   @id @default(cuid())
+  type      String // "empresa" | "newsletter"
+  name      String?
+  company   String?
+  email     String
+  teamSize  String?
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+}

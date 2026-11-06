@@ -21,6 +21,20 @@ async function fetchOneRaw(slug: string) {
   });
 }
 
+// Cursos sembrados antes del rebrand guardan colores de la paleta anterior.
+// Se traducen al leer; los cursos nuevos ya usan la paleta INGENIUACADEMY.
+const LEGACY_COLORS: Record<string, string> = {
+  "#FF6B7A": "#D62828",
+  "#FF4A60": "#D62828",
+  "#2F81F7": "#0071BC",
+  "#6366F1": "#00B8D9",
+  "#0A0A0A": "#0B2A47",
+};
+
+function brandColor(color: string) {
+  return LEGACY_COLORS[color.toUpperCase()] ?? color;
+}
+
 function parseJsonArray(value: string): string[] {
   try {
     const parsed = JSON.parse(value);
@@ -55,7 +69,7 @@ function mapCourse(row: NonNullable<CourseRow>): CourseWithId {
     reviewsCount: row.reviewsCount,
     studentsCount: row.studentsCount,
     durationHours: row.durationHours,
-    color: row.color,
+    color: brandColor(row.color),
     certType: row.certType as CertType,
     featured: row.featured,
     whatYouWillLearn: parseJsonArray(row.whatYouWillLearn),

@@ -20,7 +20,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 612,
     studentsCount: 8400,
     durationHours: 18,
-    color: "#FF6B7A",
+    color: "#D62828",
     certType: "mdt",
     featured: true,
     whatYouWillLearn: [
@@ -73,7 +73,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 405,
     studentsCount: 6200,
     durationHours: 14,
-    color: "#6366F1",
+    color: "#00B8D9",
     certType: "empresarial",
     featured: true,
     whatYouWillLearn: [
@@ -126,7 +126,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 530,
     studentsCount: 5100,
     durationHours: 10,
-    color: "#2F81F7",
+    color: "#0071BC",
     certType: "empresarial",
     featured: true,
     whatYouWillLearn: [
@@ -274,7 +274,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 740,
     studentsCount: 9600,
     durationHours: 8,
-    color: "#FF4A60",
+    color: "#D62828",
     certType: "mdt",
     featured: true,
     whatYouWillLearn: [
@@ -320,7 +320,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 224,
     studentsCount: 4700,
     durationHours: 15,
-    color: "#FF4A60",
+    color: "#D62828",
     certType: "mdt",
     whatYouWillLearn: [
       "Diseño de perfiles de puesto",
@@ -366,7 +366,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 156,
     studentsCount: 3100,
     durationHours: 20,
-    color: "#0A0A0A",
+    color: "#0B2A47",
     certType: "empresarial",
     whatYouWillLearn: [
       "Estructura de una página con HTML5",
@@ -415,7 +415,7 @@ export const seedCourses: Course[] = [
     reviewsCount: 312,
     studentsCount: 5600,
     durationHours: 9,
-    color: "#2F81F7",
+    color: "#0071BC",
     certType: "empresarial",
     whatYouWillLearn: [
       "Autoconocimiento emocional",

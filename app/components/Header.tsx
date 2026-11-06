@@ -18,7 +18,6 @@ export default function Header() {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session, status, update } = useSession();
-  const firstName = session?.user?.name?.split(" ")[0];
 
   // El login/registro ocurre en una Server Action: el SessionProvider del
   // layout (que persiste entre navegaciones) no se entera solo. Al cambiar
@@ -33,10 +32,10 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-4 z-50 mx-auto flex w-fit max-w-[95vw] items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-2 shadow-[0_2px_0_0_rgba(0,0,0,1)]">
+    <header className="sticky top-4 z-50 mx-auto flex w-fit max-w-[95vw] items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-2 shadow-[0_2px_0_0_var(--ink)]">
       <Link href="/" className="flex items-center gap-2 pl-1 pr-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-xs font-black">
-          H
+          I
         </span>
         <span className="hidden text-sm font-extrabold sm:block">
           {brand.name}
@@ -63,7 +62,7 @@ export default function Header() {
             </svg>
           </button>
           {categoriesOpen && (
-            <ul className="absolute top-full left-0 mt-2 grid w-72 grid-cols-1 gap-0.5 rounded-2xl border-2 border-black bg-white p-2 text-sm shadow-[0_2px_0_0_rgba(0,0,0,1)]">
+            <ul className="absolute top-full left-0 mt-2 grid w-72 grid-cols-1 gap-0.5 rounded-2xl border-2 border-black bg-white p-2 text-sm shadow-[0_2px_0_0_var(--ink)]">
               {categories.map((c) => (
                 <li key={c.slug}>
                   <Link
@@ -113,16 +112,16 @@ export default function Header() {
             {session?.user?.role === "ADMIN" && (
               <Link
                 href="/admin/cursos"
-                className="rounded-full px-3 py-2 text-sm font-medium text-[#2F81F7] hover:bg-black/5"
+                className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-[#0071BC] hover:bg-black/5"
               >
                 Admin
               </Link>
             )}
             <Link
               href="/dashboard"
-              className="rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium hover:bg-black/5"
             >
-              Hola, {firstName}
+              Mi panel
             </Link>
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
@@ -166,7 +165,7 @@ export default function Header() {
       </button>
 
       {mobileOpen && (
-        <div className="absolute top-full left-0 mt-2 w-[90vw] max-w-sm rounded-3xl border-2 border-black bg-white p-4 text-sm shadow-[0_3px_0_0_rgba(0,0,0,1)] lg:hidden">
+        <div className="absolute top-full left-0 mt-2 w-[90vw] max-w-sm rounded-3xl border-2 border-black bg-white p-4 text-sm shadow-[0_3px_0_0_var(--ink)] lg:hidden">
           <p className="mb-2 px-2 text-xs font-semibold uppercase text-black/40">
             Categorías
           </p>

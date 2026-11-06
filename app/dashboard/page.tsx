@@ -11,7 +11,7 @@ import { issueCertificateIfMissing } from "@/lib/certificates";
 import AdvanceButton from "./AdvanceButton";
 
 export const metadata: Metadata = {
-  title: "Mi panel | Hispaniarum",
+  title: "Mi panel | INGENIUACADEMY",
 };
 
 export default async function DashboardPage() {
@@ -67,10 +67,10 @@ export default async function DashboardPage() {
           eyebrow="Mi panel"
           title={
             <>
-              Hola, <Highlight color="#FF6B7A">{session.user.name}</Highlight>
+              Hola, <Highlight color="#D62828">{session.user.name}</Highlight>
             </>
           }
-          description="Este es tu progreso real: se guarda en la base de datos de Hispaniarum."
+          description="Este es tu progreso real: se guarda en la base de datos de INGENIUACADEMY."
         />
 
         <section className="mt-4 grid gap-4 sm:grid-cols-3">

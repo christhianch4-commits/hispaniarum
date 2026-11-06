@@ -29,7 +29,7 @@ export default function DeleteCourseButton({
               }
             })
           }
-          className="rounded-full bg-[#FF4A60] px-3 py-1 font-semibold text-white disabled:opacity-60"
+          className="rounded-full bg-[#D62828] px-3 py-1 font-semibold text-white disabled:opacity-60"
         >
           {pending ? "..." : "Sí, eliminar"}
         </button>
@@ -50,11 +50,11 @@ export default function DeleteCourseButton({
           setError(null);
           setConfirming(true);
         }}
-        className="text-xs font-semibold text-[#FF4A60] hover:underline"
+        className="text-xs font-semibold text-[#D62828] hover:underline"
       >
         Eliminar
       </button>
-      {error && <p className="mt-1 max-w-[220px] text-xs text-[#FF4A60]">{error}</p>}
+      {error && <p className="mt-1 max-w-[220px] text-xs text-[#D62828]">{error}</p>}
     </div>
   );
 }
